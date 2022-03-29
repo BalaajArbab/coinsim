@@ -5,6 +5,6 @@
 
 package coinSim.tradingStrategy;
 
-public class TradingStrategy {
-    
+public abstract class TradingStrategy {
+    public abstract void Enact();
 }
