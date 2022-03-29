@@ -1,3 +1,8 @@
+/**
+ * Database structure to hold Coin objects.
+ * @author Balaaj Arbab
+ */
+
 package coinSim.coinData;
 
 import java.util.Hashtable;
@@ -25,25 +30,25 @@ public class CoinDB {
 		return instance;
 	}
 	
-	public void AddCoin(String symbol, Coin coin)
+	public void AddCoin(String id, Coin coin)
 	{
-		this.CoinDict.put(symbol, coin);
+		this.CoinDict.put(id, coin);
 	}
 	
-	public Coin GetCoin(String symbol)
+	public Coin GetCoin(String id)
 	{
-		return this.CoinDict.get(symbol);
+		return this.CoinDict.get(id);
 	}
 	
-	public ArrayList<Coin> GetCoins(ArrayList<String> symbols)
+	public ArrayList<Coin> GetCoins(ArrayList<String> ids)
 	{
 		ArrayList<Coin> coinsToReturn = new ArrayList<Coin>();
 		
-		for (String symbol : symbols)
+		for (String id : ids)
 		{
-			if (this.CoinDict.containsKey(symbol))
+			if (this.CoinDict.containsKey(id))
 			{
-				coinsToReturn.add(this.CoinDict.get(symbol));
+				coinsToReturn.add(this.CoinDict.get(id));
 			}
 		}
 		

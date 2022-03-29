@@ -80,6 +80,20 @@ public class DataFetcher {
 		return volume;
 	}
 	
+	public String GetSymbol(String id, String date)
+	{
+		String symbol = "";
+		
+		JsonObject jsonObject = getDataForCrypto(id, date);
+		
+		if (jsonObject != null)
+		{
+			symbol = jsonObject.get("symbol").getAsString();
+		}
+		
+		return symbol;
+	}
+	
 	public static void main(String[] args) {
 		DataFetcher fetcher = new DataFetcher();
 		double price = fetcher.getPriceForCoin("bitcoin", "08-09-2021");

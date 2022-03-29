@@ -1,29 +1,38 @@
+/**
+ * Datatype representing a Cryptocoin.
+ * @author Balaaj Arbab
+ */
+
 package coinSim.coinData;
 
 public class Coin {
 	
 	String Id;
 	String Symbol;
-	String Name;
-	int Price;
-	long MktCap;
-	long Volume;
 	
-	public Coin(String id, String symbol, String name, int price, long mktCap, long volume)
+	double Price;
+	double MktCap;
+	double Volume;
+	
+	public Coin(String id, String symbol, double price, double mktCap, double volume)
 	{
 		this.Id = id;
 		this.Symbol = symbol;
-		this.Name = name;
 		this.Price = price;
 		this.MktCap = mktCap;
 		this.Volume = volume;
 	}
 	
-	public void UpdateCoin(int newPrice, long newMktCap, long newVolume)
+	public void UpdateCoin(double newPrice, double newMktCap, double newVolume)
 	{
 		this.Price = newPrice;
 		this.MktCap = newMktCap;
 		this.Volume = newVolume;
+	}
+	
+	public String toString()
+	{
+		return "ID: " + this.Id + ", Symbol: " + this.Symbol + ", Price: " + this.Price + ", MktCap: " + this.MktCap + ", Volume: " + this.Volume;
 	}
 	
 
