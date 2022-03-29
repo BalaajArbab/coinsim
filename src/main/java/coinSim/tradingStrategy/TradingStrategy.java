@@ -5,6 +5,8 @@
 
 package coinSim.tradingStrategy;
 
+import coinSim.session.Trader;
+
 public abstract class TradingStrategy {
-    public abstract void Enact();
+    public abstract void Enact(Trader trader);
 }
