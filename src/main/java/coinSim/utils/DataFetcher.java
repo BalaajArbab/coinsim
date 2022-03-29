@@ -80,6 +80,7 @@ public class DataFetcher {
 		return volume;
 	}
 	
+	// Added method to extract symbol of coin from json.
 	public String GetSymbol(String id, String date)
 	{
 		String symbol = "";

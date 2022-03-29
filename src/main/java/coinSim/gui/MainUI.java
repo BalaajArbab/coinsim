@@ -159,6 +159,8 @@ public class MainUI extends JFrame implements ActionListener {
 		stats.setLayout(new GridLayout(2, 2));
 
 		west.add(stats);
+		
+		System.out.println("tester");
 
 		getContentPane().add(north, BorderLayout.NORTH);
 		getContentPane().add(east, BorderLayout.EAST);

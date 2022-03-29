@@ -30,9 +30,15 @@ public class CoinDB {
 		return instance;
 	}
 	
-	public void AddCoin(String id, Coin coin)
+	public boolean AddCoin(String id, Coin coin)
 	{
-		this.CoinDict.put(id, coin);
+		if (!this.CoinDict.containsKey(id))
+		{
+			this.CoinDict.put(id, coin);
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public Coin GetCoin(String id)

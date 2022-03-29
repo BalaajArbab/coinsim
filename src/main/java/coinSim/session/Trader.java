@@ -1,3 +1,8 @@
+/**
+ * Datatype representing a Trader.
+ * @author Balaaj Arbab
+ */
+
 package coinSim.session;
 
 import java.util.Hashtable;
@@ -38,9 +43,19 @@ public class Trader {
 		this.TradeStrategy = number;
 	}
 	
-	public void updateCoinCount(String id, double newCount)
+	public void UpdateCoinCount(String id, double newCount)
 	{
 		CoinCounts.put(id, newCount);
+	}
+	
+	public void EditName(String newName)
+	{
+		this.Name = newName;
+	}
+	
+	public String GetName()
+	{
+		return this.Name;
 	}
 
 }
