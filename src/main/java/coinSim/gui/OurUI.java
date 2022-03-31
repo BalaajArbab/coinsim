@@ -215,7 +215,8 @@ public class OurUI extends JFrame implements ActionListener
 			{
 				TradingStrategy strat = StrategyCreator.CreateStrategy(trader.GetTradeStrategy());
 				
-				System.out.println(strat);
+				boolean atleastOneTradePerformed = false;
+				
 				if (strat != null)
 				{					
 					boolean tradePerformed = strat.Enact(trader, recordTable);
@@ -224,9 +225,11 @@ public class OurUI extends JFrame implements ActionListener
 					{
 						System.out.println("Trade not performed for " + trader.GetName() + " due to mismatch of coins of interest");
 					}
+					else atleastOneTradePerformed = true;
 				}
 			}
 			
+			this.traderViewer.Notify(); // To fix trade strategy selected in view, if confirm button was not pressed.
 			recordTable.PrintRecords();
 			
 		} 

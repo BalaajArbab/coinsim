@@ -25,12 +25,18 @@ public class TradingStrategy01 extends TradingStrategy {
     	Coin bitcoin = coinDB.GetCoin("bitcoin");
     	Coin ethereum = coinDB.GetCoin("ethereum");
     	
-    	HashSet<String> traderCoinsOfInterest = trader.GetCoinsOfInterest();
+    	HashSet<String> traderCoinsOfInterest = trader.GetCoinsOfInterest();   	
+    	
     	
     	for (String s : coinsOfInterest)
     	{
-    		if (!traderCoinsOfInterest.contains(s)) return false;
-    	}
+    		if (!traderCoinsOfInterest.contains(s))
+    		{
+    			TradeRecord record = new TradeRecord(trader.GetName(), StrategyName, "N/A", "FAIL", "N/A", "N/A");
+    			recordTable.InsertRecord(record);
+    			return false;
+    		}
+    	}	
     	
     	ArrayList<TradeRecord> records = new ArrayList<TradeRecord>();
     	
