@@ -1,7 +1,7 @@
 /**
  * Class for the Trading Strategy 01. Inherits from the TradingStrategy class.
  * 
- * @author Arjav R.
+ * @author Arjav R., Balaaj A.
  * 
  */
 
@@ -13,17 +13,17 @@ import coinSim.records.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.ArrayList;
 
 public class TradingStrategy01 extends TradingStrategy {
     
-	private static HashSet<String> coinsOfInterest = new HashSet<String>(Arrays.asList("bitcoin", "ethereum", "dogecoin"));
-	public static String name = "Strategy-01";
+	private static HashSet<String> coinsOfInterest = new HashSet<String>(Arrays.asList("bitcoin", "ethereum"));
+	public static String StrategyName = "Strategy-01";
 	
-    public boolean Enact(Trader trader) {
+    public boolean Enact(Trader trader, RecordTable recordTable) {
         
     	Coin bitcoin = coinDB.GetCoin("bitcoin");
     	Coin ethereum = coinDB.GetCoin("ethereum");
-    	Coin dogecoin = coinDB.GetCoin("dogecoin");
     	
     	HashSet<String> traderCoinsOfInterest = trader.GetCoinsOfInterest();
     	
@@ -32,30 +32,35 @@ public class TradingStrategy01 extends TradingStrategy {
     		if (!traderCoinsOfInterest.contains(s)) return false;
     	}
     	
+    	ArrayList<TradeRecord> records = new ArrayList<TradeRecord>();
+    	
     	if (bitcoin.GetPrice() > 30000d)
     	{
     		trader.BuyCoin("bitcoin", 1);
     		
-    		TradeRecord record = new TradeRecord(trader.GetName(), name, "bitcoin", "Buy", "1", bitcoin.GetPrice() + "");
-    		System.out.println(record);
+    		TradeRecord record = new TradeRecord(trader.GetName(), StrategyName, "bitcoin", "Buy", "1", bitcoin.GetPrice() + "");
+    		records.add(record);
     	}
     	
-    	
-    	trader.IncrementTrades();
-    	return true;
-    	
-    	
-    	
-    	
-    	
-    }
-    
-    public static void main(String[] args)
-    {
-    	for (String s : coinsOfInterest)
+    	if (ethereum.GetPrice() > 1500d)
     	{
-    		System.out.println(s);
+    		trader.SellCoin("ethereum", 5);
+    		
+    		TradeRecord record = new TradeRecord(trader.GetName(), StrategyName, "ethereum", "Sell", "5", ethereum.GetPrice() + "");
+    		records.add(record);
     	}
+    	
+    	
+    	for (int i = 0; i < records.size(); i++)
+    	{
+    		trader.IncrementTrades();
+    	}
+    		
+    	recordTable.InsertRecords(records);
+    	
+    	return true;
+    		 	
+    	
     }
 
 }
