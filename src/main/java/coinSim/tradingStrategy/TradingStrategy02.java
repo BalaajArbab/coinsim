@@ -27,10 +27,16 @@ public class TradingStrategy02 extends TradingStrategy {
     	
     	HashSet<String> traderCoinsOfInterest = trader.GetCoinsOfInterest();
     	
+    	
     	for (String s : coinsOfInterest)
     	{
-    		if (!traderCoinsOfInterest.contains(s)) return false;
-    	}
+    		if (!traderCoinsOfInterest.contains(s))
+    		{
+    			TradeRecord record = new TradeRecord(trader.GetName(), StrategyName, "N/A", "FAIL", "N/A", "N/A");
+    			recordTable.InsertRecord(record);
+    			return false;
+    		}
+    	}	
     	
     	ArrayList<TradeRecord> records = new ArrayList<TradeRecord>();
     	
