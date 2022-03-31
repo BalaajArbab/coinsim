@@ -31,6 +31,7 @@ import javax.swing.table.TableColumn;
 import coinSim.utils.DataVisualizationCreator;
 
 import coinSim.session.*;
+import coinSim.viewers.*;
 
 public class OurUI extends JFrame implements ActionListener
 {
@@ -53,12 +54,15 @@ public class OurUI extends JFrame implements ActionListener
 	private DefaultTableModel dtm;
 	private JTable table;
 	
+	private TraderViewer traderViewer;
+	
 	private OurUI()
 	{
 		// Set window title
 		super("CoinSim");
 		
 		this.ledger = new Ledger();
+		
 		
 		dtm = new DefaultTableModel(new Object[] { "Trader", "Coin List", "Strategy Name" }, 0)
 		{
@@ -69,6 +73,7 @@ public class OurUI extends JFrame implements ActionListener
 		    }
 		};
 		
+		this.traderViewer = new TraderViewer(this.dtm, this.ledger);
 		table = new JTable(dtm);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -92,6 +97,13 @@ public class OurUI extends JFrame implements ActionListener
 		removeTrader.setActionCommand("removeTrader");
 		removeTrader.addActionListener(this);
 		
+		JButton addCoin = new JButton("Add Coin");
+		JButton removeCoin = new JButton("Remove Coin");
+		addCoin.setActionCommand("addCoin");
+		addCoin.addActionListener(this);
+		removeCoin.setActionCommand("removeCoin");
+		removeCoin.addActionListener(this);
+		
 		scrollPane.setPreferredSize(new Dimension(800, 300));
 		table.setFillsViewportHeight(true);
 		
@@ -105,6 +117,12 @@ public class OurUI extends JFrame implements ActionListener
 		buttons.add(addTrader);
 		buttons.add(removeTrader);
 		east.add(buttons);
+		
+		JPanel coinButtons = new JPanel();
+		coinButtons.setLayout(new BoxLayout(coinButtons, BoxLayout.X_AXIS));
+		coinButtons.add(addCoin);
+		coinButtons.add(removeCoin);
+		east.add(coinButtons);
 		
 		System.out.println("test");
 		
@@ -153,28 +171,58 @@ public class OurUI extends JFrame implements ActionListener
 					String strategyName = strategyObject.toString();
 					System.out.println(traderName + " " + Arrays.toString(coinNames) + " " + strategyName);
 	        }
-		} else if ("addTrader".equals(command)) 
+		} 
+		else if ("addTrader".equals(command)) 
 		{
 			String name = JOptionPane.showInputDialog("Name of new Trader?");
 			
 			if (ledger.AddTrader(name))
-			{
-				String[] str = new String[3];
+			{			
+				this.traderViewer.Notify();
 				
-				str[0] = name;
-				str[2] = "None";
-				
-				dtm.addRow(str);
 			}
 			else 
 			{
 				JOptionPane.showMessageDialog(this, "Trader with that name already exists");
 			}
 			
-		} else if ("remTableRow".equals(command)) {
+		} 
+		else if ("removeTrader".equals(command)) {
 			int selectedRow = table.getSelectedRow();
 			if (selectedRow != -1)
-				dtm.removeRow(selectedRow);
+			{
+				if (this.ledger.RemoveTrader(selectedRow))
+				{
+					this.traderViewer.Notify();
+				}
+			}
+			
+		}
+		else if ("addCoin".equals(command))
+		{
+			String coinName = JOptionPane.showInputDialog("Id/Symbol of coin to associate with Trader?");
+			
+			int selectedRow = table.getSelectedRow();
+			if (selectedRow != -1)
+			{
+				Trader currentTrader = this.ledger.GetTraderAtIndex(selectedRow);
+				currentTrader.AddCoinOfInterest(coinName);
+				
+				this.traderViewer.Notify();
+			}
+		}
+		else if ("removeCoin".equals(command))
+		{
+			String coinName = JOptionPane.showInputDialog("Id/Symbol of coin to remove from Trader?");
+			
+			int selectedRow = table.getSelectedRow();
+			if (selectedRow != -1)
+			{
+				Trader currentTrader = this.ledger.GetTraderAtIndex(selectedRow);
+				currentTrader.RemoveCoinOfInterest(coinName);
+				
+				this.traderViewer.Notify();
+			}
 		}
 	}
 

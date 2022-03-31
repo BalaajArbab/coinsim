@@ -33,8 +33,14 @@ public class Ledger {
 	public boolean RemoveTrader(int index)
 	{
 		// TODO
+		if (index < this.Traders.size())
+		{
+			this.Traders.remove(index);
+			
+			return true;
+		}
 		
-		return true;
+		return false;
 	}
 	
 	
@@ -46,6 +52,16 @@ public class Ledger {
 		}
 		
 		return false;
+	}
+	
+	public ArrayList<Trader> GetTraders()
+	{
+		return this.Traders;
+	}
+	
+	public Trader GetTraderAtIndex(int index)
+	{
+		return this.Traders.get(index);
 	}
 	
 	
