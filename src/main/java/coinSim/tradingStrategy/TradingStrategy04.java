@@ -1,7 +1,7 @@
 /**
  * Class for the Trading Strategy 04. Inherits from the TradingStrategy class.
  * 
- * @author Arjav R.
+ * @author Arjav R., Balaaj A.
  * 
  */
 
@@ -37,6 +37,8 @@ public class TradingStrategy04 extends TradingStrategy {
     			return false;
     		}
     	}	
+    	
+    	trader.IncrementStrategyUseCount(4);
     	
     	ArrayList<TradeRecord> records = new ArrayList<TradeRecord>();
     	
