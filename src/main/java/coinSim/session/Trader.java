@@ -15,13 +15,18 @@ public class Trader {
 	int TradeStrategy;
 	Hashtable<String, Double> CoinCounts;
 	
+	int TradesPerformed;
+	
 	public Trader(String name)
 	{
 		this.Name = name;
 		this.TradeStrategy = -1;
+		this.TradesPerformed = 0;
 		
 		CoinsOfInterest = new HashSet<String>();
 		CoinCounts = new Hashtable<String, Double>(); 
+		
+		// initializeCoinCounts();
 	}
 	
 	public void AddCoinOfInterest(String id)
@@ -46,6 +51,41 @@ public class Trader {
 	public void UpdateCoinCount(String id, double newCount)
 	{
 		CoinCounts.put(id, newCount);
+	}
+	
+	private void initializeCoinCounts()
+	{
+		for (String s : this.CoinsOfInterest)
+		{
+			this.CoinCounts.put(s, 0d);
+		}
+	}
+	
+	public boolean BuyCoin(String id, double amount)
+	{
+		double oldCount = this.CoinCounts.get(id);
+		
+		this.CoinCounts.put(id, oldCount + amount);
+		
+		return true;
+	}
+	
+	public boolean SellCoin(String id, double amount)
+	{
+		double oldCount = this.CoinCounts.get(id);
+		
+		if (oldCount >= amount) 
+		{
+			this.CoinCounts.put(id, oldCount - amount);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void IncrementTrades()
+	{
+		this.TradesPerformed++;
 	}
 	
 	public void EditName(String newName)

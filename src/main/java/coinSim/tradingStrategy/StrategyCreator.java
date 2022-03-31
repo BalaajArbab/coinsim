@@ -12,7 +12,7 @@ public class StrategyCreator {
      * @param strategyNumber which strategy is selected
      * @return returns TradingStrategy object based on input
      */
-    public TradingStrategy createStrategy(int strategyNumber) {
+    public static TradingStrategy CreateStrategy(int strategyNumber) {
         TradingStrategy strategy = null;
         
         if (strategyNumber == 1) {

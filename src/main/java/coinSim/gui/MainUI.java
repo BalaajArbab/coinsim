@@ -44,7 +44,7 @@ public class MainUI extends JFrame implements ActionListener {
 
 	private JTextArea selectedTickerList;
 //	private JTextArea tickerList;
-	private JTextArea tickerText;
+	private JTextArea tickerText = new JTextArea("BTC, ETH, DOGE");
 	private JTextArea BrokerText;
 	private JComboBox<String> strategyList;
 	private Map<String, List<String>> brokersTickers = new HashMap<>();
@@ -149,6 +149,7 @@ public class MainUI extends JFrame implements ActionListener {
 		buttons.add(addRow);
 		buttons.add(remRow);
 		east.add(buttons);
+		east.add(tickerText);
 //		east.add(selectedTickerListLabel);
 //		east.add(selectedTickersScrollPane);
 
