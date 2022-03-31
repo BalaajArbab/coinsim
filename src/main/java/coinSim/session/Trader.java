@@ -57,5 +57,15 @@ public class Trader {
 	{
 		return this.Name;
 	}
+	
+	public HashSet<String> GetCoinsOfInterest()
+	{
+		return this.CoinsOfInterest;
+	}
+	
+	public int GetTradeStrategy() 
+	{
+		return this.TradeStrategy;
+	}
 
 }
