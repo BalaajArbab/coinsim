@@ -104,6 +104,10 @@ public class OurUI extends JFrame implements ActionListener
 		removeCoin.setActionCommand("removeCoin");
 		removeCoin.addActionListener(this);
 		
+		JButton confirmStrategySelection = new JButton("Confirm Strategy Selection");
+		confirmStrategySelection.setActionCommand("confirmStrat");
+		confirmStrategySelection.addActionListener(this);
+		
 		scrollPane.setPreferredSize(new Dimension(800, 300));
 		table.setFillsViewportHeight(true);
 		
@@ -123,6 +127,11 @@ public class OurUI extends JFrame implements ActionListener
 		coinButtons.add(addCoin);
 		coinButtons.add(removeCoin);
 		east.add(coinButtons);
+		
+		JPanel stratButtons = new JPanel();
+		stratButtons.setLayout(new BoxLayout(stratButtons, BoxLayout.X_AXIS));
+		stratButtons.add(confirmStrategySelection);
+		east.add(stratButtons);
 		
 		System.out.println("test");
 		
@@ -210,6 +219,7 @@ public class OurUI extends JFrame implements ActionListener
 				
 				this.traderViewer.Notify();
 			}
+			this.ledger.PrintStrategies();
 		}
 		else if ("removeCoin".equals(command))
 		{
@@ -224,6 +234,47 @@ public class OurUI extends JFrame implements ActionListener
 				this.traderViewer.Notify();
 			}
 		}
+		else if ("confirmStrat".equals(command))
+		{
+			ArrayList<Integer> strategies = getStrategyList();
+			
+			this.ledger.SetStrategies(strategies);
+			
+		}
+	}
+	
+	private ArrayList<Integer> getStrategyList()
+	{
+		ArrayList<Integer> strategies = new ArrayList<Integer>();
+		
+		int rows = dtm.getRowCount();
+		
+		for (int i = 0; i < rows; i++)
+		{
+			String value = (String)dtm.getValueAt(i, 2);
+			
+			switch(value)
+			{
+				case "None": 
+					strategies.add(-1);
+					break;
+				case "Strategy-01": 
+					strategies.add(1);
+					break;
+				case "Strategy-02": 
+					strategies.add(2);
+					break;
+				case "Strategy-03": 
+					strategies.add(3);
+					break;
+				case "Strategy-04": 
+					strategies.add(4);
+					break;
+			}
+		}
+		
+		return strategies;
+				
 	}
 
 }

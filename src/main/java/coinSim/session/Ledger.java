@@ -10,10 +10,13 @@ import java.util.ArrayList;
 public class Ledger {
 	
 	ArrayList<Trader> Traders;
+	int TraderCount;
 	
 	public Ledger()
 	{
-		Traders = new ArrayList<Trader>();
+		this.Traders = new ArrayList<Trader>();
+		this.TraderCount = 0;
+		
 	}
 	
 	public boolean AddTrader(String name)
@@ -22,7 +25,8 @@ public class Ledger {
 		{
 			Trader trader = new Trader(name);
 			
-			Traders.add(trader);
+			this.Traders.add(trader);
+			this.TraderCount++;
 			
 			return true;
 		}
@@ -36,6 +40,7 @@ public class Ledger {
 		if (index < this.Traders.size())
 		{
 			this.Traders.remove(index);
+			this.TraderCount--;
 			
 			return true;
 		}
@@ -46,7 +51,7 @@ public class Ledger {
 	
 	private boolean TraderExistsWithName(String name)
 	{
-		for (Trader trader : Traders)
+		for (Trader trader : this.Traders)
 		{
 			if (trader.GetName().equals(name)) return true;
 		}
@@ -64,7 +69,22 @@ public class Ledger {
 		return this.Traders.get(index);
 	}
 	
+	public void SetStrategies(ArrayList<Integer> strategies)
+	{
+		for (int i = 0; i < this.TraderCount; i++)
+		{
+			GetTraderAtIndex(i).SetTradeStrategy(strategies.get(i));
+		}
+		
+	}
 	
+	public void PrintStrategies()
+	{
+		for (Trader trader : this.Traders)
+		{
+			System.out.println(trader.GetTradeStrategy());
+		}
+	}
 	
 	
 
