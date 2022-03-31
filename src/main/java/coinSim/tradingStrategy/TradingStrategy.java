@@ -7,10 +7,11 @@ package coinSim.tradingStrategy;
 
 import coinSim.coinData.CoinDB;
 import coinSim.session.Trader;
+import coinSim.records.*;
 
 public abstract class TradingStrategy {
 	
 	protected static CoinDB coinDB = CoinDB.GetInstance();
 	
-    public abstract boolean Enact(Trader trader);
+    public abstract boolean Enact(Trader trader, RecordTable recordTable);
 }

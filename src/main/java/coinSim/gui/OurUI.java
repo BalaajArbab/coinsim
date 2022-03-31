@@ -34,6 +34,7 @@ import coinSim.session.*;
 import coinSim.viewers.*;
 import coinSim.coinData.*;
 import coinSim.tradingStrategy.*;
+import coinSim.records.*;
 
 public class OurUI extends JFrame implements ActionListener
 {
@@ -55,6 +56,7 @@ public class OurUI extends JFrame implements ActionListener
 	
 	private Ledger ledger;
 	private CoinDB coinDB;
+	private RecordTable recordTable;
 	
 	private DefaultTableModel dtm;
 	private JTable table;
@@ -69,7 +71,9 @@ public class OurUI extends JFrame implements ActionListener
 		CoinFetcher.FetchFirstTime(new ArrayList<String>(Arrays.asList(coinList)));
 		
 		this.ledger = new Ledger();
+		this.recordTable = new RecordTable();
 		this.coinDB = CoinDB.GetInstance();
+		
 		coinDB.PrintCoins();
 		
 		
@@ -204,23 +208,27 @@ public class OurUI extends JFrame implements ActionListener
 //	        }
 			
 			CoinFetcher.Fetch(new ArrayList<String>(Arrays.asList(coinList)));
-			coinDB.PrintCoins();
+			
+			//coinDB.PrintCoins();
 			
 			for (Trader trader : this.ledger.GetTraders())
 			{
 				TradingStrategy strat = StrategyCreator.CreateStrategy(trader.GetTradeStrategy());
 				
-				
+				System.out.println(strat);
 				if (strat != null)
 				{					
-					boolean tradePerformed = strat.Enact(trader);
+					boolean tradePerformed = strat.Enact(trader, recordTable);
 					
 					if (!tradePerformed)
 					{
-						System.out.println("Trade not performed for " + trader.GetName());
+						System.out.println("Trade not performed for " + trader.GetName() + " due to mismatch of coins of interest");
 					}
 				}
 			}
+			
+			recordTable.PrintRecords();
+			
 		} 
 		else if ("addTrader".equals(command)) 
 		{
