@@ -15,18 +15,27 @@ public class Trader {
 	int TradeStrategy;
 	Hashtable<String, Double> CoinCounts;
 	
-	int TradesPerformed;
+	int TransactionsPerformed;
+	
+	int[] StrategyUseCount;
 	
 	public Trader(String name)
 	{
 		this.Name = name;
 		this.TradeStrategy = -1;
-		this.TradesPerformed = 0;
+		this.TransactionsPerformed = 0;
 		
 		CoinsOfInterest = new HashSet<String>();
 		CoinCounts = new Hashtable<String, Double>(); 
 		
+		StrategyUseCount = new int[4];
+		
 		// initializeCoinCounts();
+	}
+	
+	public void IncrementStrategyUseCount(int strategyNumber)
+	{
+		this.StrategyUseCount[--strategyNumber]++;
 	}
 	
 	public void AddCoinOfInterest(String id)
@@ -85,7 +94,7 @@ public class Trader {
 	
 	public void IncrementTrades()
 	{
-		this.TradesPerformed++;
+		this.TransactionsPerformed++;
 	}
 	
 	public void EditName(String newName)

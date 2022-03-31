@@ -38,6 +38,8 @@ public class TradingStrategy03 extends TradingStrategy {
     		}
     	}	
     	
+    	trader.IncrementStrategyUseCount(3);
+    	
     	ArrayList<TradeRecord> records = new ArrayList<TradeRecord>();
     	
     	// ADD TRADE FUNCTIONALITY, also change coins
