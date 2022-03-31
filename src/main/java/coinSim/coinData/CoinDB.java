@@ -60,5 +60,14 @@ public class CoinDB {
 		
 		return coinsToReturn;
 	}
+	
+	// TODO REMOVE
+	public void PrintCoins()
+	{
+		for (Coin coin : CoinDict.values())
+		{
+			System.out.println(coin);
+		}
+	}
 
 }

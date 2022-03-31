@@ -32,6 +32,8 @@ import coinSim.utils.DataVisualizationCreator;
 
 import coinSim.session.*;
 import coinSim.viewers.*;
+import coinSim.coinData.*;
+import coinSim.tradingStrategy.*;
 
 public class OurUI extends JFrame implements ActionListener
 {
@@ -39,6 +41,8 @@ public class OurUI extends JFrame implements ActionListener
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private static String[] coinList = new String[] {"bitcoin", "ethereum", "dogecoin"};
 	
 	private static OurUI instance;
 	
@@ -50,6 +54,7 @@ public class OurUI extends JFrame implements ActionListener
 	}
 	
 	private Ledger ledger;
+	private CoinDB coinDB;
 	
 	private DefaultTableModel dtm;
 	private JTable table;
@@ -61,7 +66,11 @@ public class OurUI extends JFrame implements ActionListener
 		// Set window title
 		super("CoinSim");
 		
+		CoinFetcher.FetchFirstTime(new ArrayList<String>(Arrays.asList(coinList)));
+		
 		this.ledger = new Ledger();
+		this.coinDB = CoinDB.GetInstance();
+		coinDB.PrintCoins();
 		
 		
 		dtm = new DefaultTableModel(new Object[] { "Trader", "Coin List", "Strategy Name" }, 0)
@@ -133,12 +142,23 @@ public class OurUI extends JFrame implements ActionListener
 		stratButtons.add(confirmStrategySelection);
 		east.add(stratButtons);
 		
+		
+		JButton trade = new JButton("Perform Trade");
+		trade.setActionCommand("performTrade");
+		trade.addActionListener(this);
+
+
+		JPanel south = new JPanel();
+		
+		south.add(trade);
+		
 		System.out.println("test");
 		
 		
 		
 		
 		getContentPane().add(east, BorderLayout.EAST);
+		getContentPane().add(south, BorderLayout.SOUTH);
 		
 		
 	}
@@ -158,37 +178,61 @@ public class OurUI extends JFrame implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
-		if ("refresh".equals(command)) {
-			for (int count = 0; count < dtm.getRowCount(); count++){
-					Object traderObject = dtm.getValueAt(count, 0);
-					if (traderObject == null) {
-						JOptionPane.showMessageDialog(this, "please fill in Trader name on line " + (count + 1) );
-						return;
+		if ("performTrade".equals(command)) 
+		{
+//			for (int count = 0; count < dtm.getRowCount(); count++)
+//			{
+//					Object traderObject = dtm.getValueAt(count, 0);
+//					if (traderObject == null) {
+//						JOptionPane.showMessageDialog(this, "please fill in Trader name on line " + (count + 1) );
+//						return;
+//					}
+//					String traderName = traderObject.toString();
+//					Object coinObject = dtm.getValueAt(count, 1);
+//					if (coinObject == null) {
+//						JOptionPane.showMessageDialog(this, "please fill in cryptocoin list on line " + (count + 1) );
+//						return;
+//					}
+//					String[] coinNames = coinObject.toString().split(",");
+//					Object strategyObject = dtm.getValueAt(count, 2);
+//					if (strategyObject == null) {
+//						JOptionPane.showMessageDialog(this, "please fill in strategy name on line " + (count + 1) );
+//						return;
+//					}
+//					String strategyName = strategyObject.toString();
+//					System.out.println(traderName + " " + Arrays.toString(coinNames) + " " + strategyName);
+//	        }
+			
+			CoinFetcher.Fetch(new ArrayList<String>(Arrays.asList(coinList)));
+			coinDB.PrintCoins();
+			
+			for (Trader trader : this.ledger.GetTraders())
+			{
+				TradingStrategy strat = StrategyCreator.CreateStrategy(trader.GetTradeStrategy());
+				
+				
+				if (strat != null)
+				{					
+					boolean tradePerformed = strat.Enact(trader);
+					
+					if (!tradePerformed)
+					{
+						System.out.println("Trade not performed for " + trader.GetName());
 					}
-					String traderName = traderObject.toString();
-					Object coinObject = dtm.getValueAt(count, 1);
-					if (coinObject == null) {
-						JOptionPane.showMessageDialog(this, "please fill in cryptocoin list on line " + (count + 1) );
-						return;
-					}
-					String[] coinNames = coinObject.toString().split(",");
-					Object strategyObject = dtm.getValueAt(count, 2);
-					if (strategyObject == null) {
-						JOptionPane.showMessageDialog(this, "please fill in strategy name on line " + (count + 1) );
-						return;
-					}
-					String strategyName = strategyObject.toString();
-					System.out.println(traderName + " " + Arrays.toString(coinNames) + " " + strategyName);
-	        }
+				}
+			}
 		} 
 		else if ("addTrader".equals(command)) 
 		{
 			String name = JOptionPane.showInputDialog("Name of new Trader?");
 			
-			if (ledger.AddTrader(name))
+			if (name.length() == 0)
+			{
+				JOptionPane.showMessageDialog(this, "Pls enter some text for name");
+			}
+			else if (ledger.AddTrader(name))
 			{			
 				this.traderViewer.Notify();
-				
 			}
 			else 
 			{
@@ -209,17 +253,25 @@ public class OurUI extends JFrame implements ActionListener
 		}
 		else if ("addCoin".equals(command))
 		{
-			String coinName = JOptionPane.showInputDialog("Id/Symbol of coin to associate with Trader?");
+			String coins = JOptionPane.showInputDialog("Id/Symbol of coin to associate with Trader? (or list of coins separated by space)");
 			
 			int selectedRow = table.getSelectedRow();
 			if (selectedRow != -1)
 			{
 				Trader currentTrader = this.ledger.GetTraderAtIndex(selectedRow);
-				currentTrader.AddCoinOfInterest(coinName);
+				
+				String[] coinNames = coins.split(" ");
+				
+				for (String coinName : coinNames)
+				{
+					currentTrader.AddCoinOfInterest(coinName);
+				}
+				
+				
 				
 				this.traderViewer.Notify();
 			}
-			this.ledger.PrintStrategies();
+			
 		}
 		else if ("removeCoin".equals(command))
 		{

@@ -11,11 +11,14 @@ import coinSim.utils.DataFetcher;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
+
 public class CoinFetcher {
 	
 	private static DataFetcher fetcher = new DataFetcher();
+	private static CoinDB coinDB = CoinDB.GetInstance();
 	
-	public static Coin FetchNewCoin(String id)
+	private static Coin FetchNewCoin(String id)
 	{
 		LocalDate date = LocalDate.now();
 		String dateString = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
@@ -30,7 +33,7 @@ public class CoinFetcher {
 		return coin;
 	}
 	
-	public static Coin FetchNewCoin(String id, String dateString)
+	private static Coin FetchNewCoin(String id, String dateString)
 	{
 		
 		String symbol = fetcher.GetSymbol(id, dateString);
@@ -43,7 +46,7 @@ public class CoinFetcher {
 		return coin;
 	}
 	
-	public static void FetchAndUpdateCoin(String id, Coin coin)
+	private static void FetchAndUpdateCoin(String id, Coin coin)
 	{
 		LocalDate date = LocalDate.now();
 		String dateString = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
@@ -55,7 +58,7 @@ public class CoinFetcher {
 		coin.UpdateCoin(price, mktCap, vol);
 	}
 	
-	public static void FetchAndUpdateCoin(String id, String dateString, Coin coin)
+	private static void FetchAndUpdateCoin(String id, String dateString, Coin coin)
 	{
 		
 		double price = fetcher.getPriceForCoin(id, dateString);
@@ -64,6 +67,26 @@ public class CoinFetcher {
 		
 		coin.UpdateCoin(price, mktCap, vol);
 	}
+	
+	public static void Fetch(ArrayList<String> coinIDs)
+	{
+		for (String id : coinIDs)
+		{
+			Coin coin = coinDB.GetCoin(id);
+			
+			FetchAndUpdateCoin(id, coin);
+		}
+	}
+	
+	public static void FetchFirstTime(ArrayList<String> coinIDs)
+	{
+		for (String id : coinIDs)
+		{
+			Coin coin = FetchNewCoin(id);
+			coinDB.AddCoin(id, coin);
+		}
+	}
+	
 	
 	public static void main(String[] args)
 	{

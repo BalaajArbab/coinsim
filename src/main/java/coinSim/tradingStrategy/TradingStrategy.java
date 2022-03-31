@@ -5,8 +5,12 @@
 
 package coinSim.tradingStrategy;
 
+import coinSim.coinData.CoinDB;
 import coinSim.session.Trader;
 
 public abstract class TradingStrategy {
-    public abstract void Enact(Trader trader);
+	
+	protected static CoinDB coinDB = CoinDB.GetInstance();
+	
+    public abstract boolean Enact(Trader trader);
 }
