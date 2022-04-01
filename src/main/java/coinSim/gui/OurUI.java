@@ -214,10 +214,19 @@ public class OurUI extends JFrame implements ActionListener
 		south.add(trade);
 			
 		
+		JPanel north = new JPanel();
+		
+		JTextArea tickers = new JTextArea("Available Tickers:\n" + String.join(", ", this.coinList));
+		tickers.setBackground(Color.YELLOW);
+		
+		
+		north.add(tickers);
+		//north.setBackground(Color.yellow);
 		
 		getContentPane().add(east, BorderLayout.EAST);
 		getContentPane().add(south, BorderLayout.SOUTH);
 		getContentPane().add(west, BorderLayout.WEST);
+		getContentPane().add(north, BorderLayout.NORTH);
 		
 		
 		outputViewers = new ArrayList<Viewer>();
@@ -269,11 +278,12 @@ public class OurUI extends JFrame implements ActionListener
 			
 			coinDB.PrintCoins();
 			
+			boolean atleastOneTradePerformed = false;
+			
 			for (Trader trader : this.ledger.GetTraders())
 			{
 				TradingStrategy strat = StrategyCreator.CreateStrategy(trader.GetTradeStrategy());
 				
-				boolean atleastOneTradePerformed = false;
 				
 				if (strat != null)
 				{					
@@ -289,10 +299,14 @@ public class OurUI extends JFrame implements ActionListener
 			
 			this.traderViewer.Notify(); // To fix trade strategy selected in view, if confirm button was not pressed.
 			
-			// traderViewer not included in this as it is of a different nature.
-			for (Viewer viewer : this.outputViewers)
+			
+			if (atleastOneTradePerformed)
 			{
-				viewer.Notify();
+				// traderViewer not included in this as it is of a different nature (not output).
+				for (Viewer viewer : this.outputViewers)
+				{
+					viewer.Notify();
+				}
 			}
 			
 			
