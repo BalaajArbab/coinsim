@@ -116,5 +116,10 @@ public class Trader {
 	{
 		return this.TradeStrategy;
 	}
+	
+	public int[] GetStratUseCounts()
+	{
+		return this.StrategyUseCount;
+	}
 
 }

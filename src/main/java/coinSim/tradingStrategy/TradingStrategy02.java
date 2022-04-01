@@ -38,7 +38,7 @@ public class TradingStrategy02 extends TradingStrategy {
     		}
     	}	
     	
-    	trader.IncrementStrategyUseCount(1);
+    	trader.IncrementStrategyUseCount(2);
     	
     	ArrayList<TradeRecord> records = new ArrayList<TradeRecord>();
     	

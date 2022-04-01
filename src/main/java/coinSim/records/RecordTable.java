@@ -32,5 +32,10 @@ public class RecordTable {
 			System.out.println(record);
 		}
 	}
+	
+	public ArrayList<TradeRecord> GetRecords()
+	{
+		return this.Records;
+	}
 
 }
