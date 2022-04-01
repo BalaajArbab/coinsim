@@ -1,6 +1,6 @@
 /**
  * Trading Strategy parent class.
- * @author Arjav R.
+ * @author Arjav R., Balaaj A.
  */
 
 package coinSim.tradingStrategy;

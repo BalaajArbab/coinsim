@@ -1,7 +1,9 @@
 package coinSim.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +29,15 @@ import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.LogAxis;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.Range;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 import coinSim.utils.DataVisualizationCreator;
 
@@ -61,7 +72,19 @@ public class OurUI extends JFrame implements ActionListener
 	private DefaultTableModel dtm;
 	private JTable table;
 	
+	private DefaultTableModel recordTableModel;
+	private JTable westTable;
+	
 	private TraderViewer traderViewer;
+	
+	// Put in array of Viewer[]?
+	private RecordViewer recordViewer;
+	private HistogramViewer histViewer;
+	
+	private ArrayList<Viewer> outputViewers;
+	
+	
+	private DefaultCategoryDataset dataset;
 	
 	private OurUI()
 	{
@@ -152,19 +175,54 @@ public class OurUI extends JFrame implements ActionListener
 		trade.addActionListener(this);
 
 
+		
+		recordTableModel = new DefaultTableModel(new Object[] {"Trader","Strategy","CryptoCoin","Action","Quantity","Price","Date"}, 0)
+		{
+		    public boolean isCellEditable(int row, int column) 
+		    {
+		        return false;
+		    }
+		};
+		
+		this.recordViewer = new RecordViewer(this.recordTableModel, this.recordTable);
+		
+		
+		westTable = new JTable(recordTableModel);
+		
+		JScrollPane westScrollPane = new JScrollPane(westTable);
+		westScrollPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Records and Charts",
+				TitledBorder.CENTER, TitledBorder.TOP));
+		
+		
+		JPanel west = new JPanel();
+		
+		westScrollPane.setPreferredSize(new Dimension(800, 300));
+		westTable.setFillsViewportHeight(true);
+
+		west.setLayout(new BoxLayout(west, BoxLayout.Y_AXIS));
+		west.add(westScrollPane);
+		
+		ChartPanel chartPanel = createChartPanel();
+		
+		this.histViewer = new HistogramViewer(this.dataset, this.ledger);
+		
+		west.add(chartPanel);
+		
+		
 		JPanel south = new JPanel();
 		
 		south.add(trade);
-		
-		System.out.println("test");
-		
-		
+			
 		
 		
 		getContentPane().add(east, BorderLayout.EAST);
 		getContentPane().add(south, BorderLayout.SOUTH);
+		getContentPane().add(west, BorderLayout.WEST);
 		
 		
+		outputViewers = new ArrayList<Viewer>();
+		outputViewers.add(histViewer);
+		outputViewers.add(recordViewer);
 	}
 	
 	
@@ -209,7 +267,7 @@ public class OurUI extends JFrame implements ActionListener
 			
 			CoinFetcher.Fetch(new ArrayList<String>(Arrays.asList(coinList)));
 			
-			//coinDB.PrintCoins();
+			coinDB.PrintCoins();
 			
 			for (Trader trader : this.ledger.GetTraders())
 			{
@@ -230,80 +288,117 @@ public class OurUI extends JFrame implements ActionListener
 			}
 			
 			this.traderViewer.Notify(); // To fix trade strategy selected in view, if confirm button was not pressed.
-			recordTable.PrintRecords();
+			
+			// traderViewer not included in this as it is of a different nature.
+			for (Viewer viewer : this.outputViewers)
+			{
+				viewer.Notify();
+			}
+			
+			
+			//recordTable.PrintRecords();
 			
 		} 
 		else if ("addTrader".equals(command)) 
 		{
-			String name = JOptionPane.showInputDialog("Name of new Trader?");
-			
-			if (name.length() == 0)
-			{
-				JOptionPane.showMessageDialog(this, "Pls enter some text for name");
-			}
-			else if (ledger.AddTrader(name))
-			{			
-				this.traderViewer.Notify();
-			}
-			else 
-			{
-				JOptionPane.showMessageDialog(this, "Trader with that name already exists");
-			}
+			addTrader();
 			
 		} 
-		else if ("removeTrader".equals(command)) {
-			int selectedRow = table.getSelectedRow();
-			if (selectedRow != -1)
-			{
-				if (this.ledger.RemoveTrader(selectedRow))
-				{
-					this.traderViewer.Notify();
-				}
-			}
+		else if ("removeTrader".equals(command)) 
+		{
+			removeTrader();
 			
 		}
 		else if ("addCoin".equals(command))
 		{
-			String coins = JOptionPane.showInputDialog("Id/Symbol of coin to associate with Trader? (or list of coins separated by space)");
-			
-			int selectedRow = table.getSelectedRow();
-			if (selectedRow != -1)
-			{
-				Trader currentTrader = this.ledger.GetTraderAtIndex(selectedRow);
-				
-				String[] coinNames = coins.split(" ");
-				
-				for (String coinName : coinNames)
-				{
-					currentTrader.AddCoinOfInterest(coinName);
-				}
-				
-				
-				
-				this.traderViewer.Notify();
-			}
+			addCoin();
 			
 		}
 		else if ("removeCoin".equals(command))
 		{
-			String coinName = JOptionPane.showInputDialog("Id/Symbol of coin to remove from Trader?");
+			removeCoin();
 			
-			int selectedRow = table.getSelectedRow();
-			if (selectedRow != -1)
-			{
-				Trader currentTrader = this.ledger.GetTraderAtIndex(selectedRow);
-				currentTrader.RemoveCoinOfInterest(coinName);
-				
-				this.traderViewer.Notify();
-			}
 		}
 		else if ("confirmStrat".equals(command))
 		{
-			ArrayList<Integer> strategies = getStrategyList();
-			
-			this.ledger.SetStrategies(strategies);
+			confirmStrat();	
 			
 		}
+	}
+	
+	private void addTrader()
+	{
+		String name = JOptionPane.showInputDialog("Name of new Trader?");
+		
+		if (name.length() == 0)
+		{
+			JOptionPane.showMessageDialog(this, "Pls enter some text for name");
+		}
+		else if (ledger.AddTrader(name))
+		{			
+			this.traderViewer.Notify();
+		}
+		else 
+		{
+			JOptionPane.showMessageDialog(this, "Trader with that name already exists");
+		}
+	}
+	
+	private void removeTrader()
+	{
+		int selectedRow = table.getSelectedRow();
+		if (selectedRow != -1)
+		{
+			if (this.ledger.RemoveTrader(selectedRow))
+			{
+				this.traderViewer.Notify();
+			}
+		}
+	}
+	
+	private void addCoin()
+	{
+		String coins = JOptionPane.showInputDialog("Id/Symbol of coin to associate with Trader? (or list of coins separated by space)");
+		
+		int selectedRow = table.getSelectedRow();
+		if (selectedRow != -1)
+		{
+			Trader currentTrader = this.ledger.GetTraderAtIndex(selectedRow);
+			
+			String[] coinNames = coins.split(" ");
+			
+			for (String coinName : coinNames)
+			{
+				currentTrader.AddCoinOfInterest(coinName);
+			}
+			
+			
+			
+			this.traderViewer.Notify();
+		}
+	}
+	
+	private void removeCoin()
+	{
+		String coinName = JOptionPane.showInputDialog("Id/Symbol of coin to remove from Trader?");
+		
+		int selectedRow = table.getSelectedRow();
+		if (selectedRow != -1)
+		{
+			Trader currentTrader = this.ledger.GetTraderAtIndex(selectedRow);
+			currentTrader.RemoveCoinOfInterest(coinName);
+			
+			this.traderViewer.Notify();
+		}
+	}
+	
+	private void confirmStrat()
+	{
+		ArrayList<Integer> strategies = getStrategyList();
+		
+		this.ledger.SetStrategies(strategies);
+		
+		JOptionPane.showMessageDialog(this, "Strategies locked in!");
 	}
 	
 	private ArrayList<Integer> getStrategyList()
@@ -339,5 +434,41 @@ public class OurUI extends JFrame implements ActionListener
 		return strategies;
 				
 	}
+	
+	private ChartPanel createChartPanel() {
+			
+			this.dataset = new DefaultCategoryDataset();
+	//		Those are hard-coded values!!!! 
+	//		You will have to come up with a proper datastructure to populate the BarChart with live data!
+//			dataset.setValue(6, "Trader-1", "Strategy-A");
+//			dataset.setValue(5, "Trader-2", "Strategy-B");
+//			dataset.setValue(0, "Trader-3", "Strategy-E");
+//			dataset.setValue(1, "Trader-4", "Strategy-C");
+//			dataset.setValue(10, "Trader-5", "Strategy-D");
+	
+			CategoryPlot plot = new CategoryPlot();
+			BarRenderer barrenderer1 = new BarRenderer();
+	
+			plot.setDataset(0, dataset);
+			plot.setRenderer(0, barrenderer1);
+			CategoryAxis domainAxis = new CategoryAxis("Strategy");
+			plot.setDomainAxis(domainAxis);
+			LogAxis rangeAxis = new LogAxis("Actions(Buys or Sells)");
+			rangeAxis.setRange(new Range(1.0, 20.0));
+			plot.setRangeAxis(rangeAxis);
+			
+	
+	
+			JFreeChart barChart = new JFreeChart("Actions Performed By Traders So Far", new Font("Serif", java.awt.Font.BOLD, 18), plot,
+					true);
+	
+			ChartPanel chartPanel = new ChartPanel(barChart);
+			chartPanel.setPreferredSize(new Dimension(600, 300));
+			chartPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+			chartPanel.setBackground(Color.white);
+			
+			return chartPanel;
+
+		}
 
 }

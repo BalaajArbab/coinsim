@@ -40,6 +40,11 @@ public class TradeRecord {
 
 	}
 	
+	public String[] AsArray()
+	{
+		return new String[] { this.TraderName, this.StrategyUsed, this.CryptoCoin, this.Action, this.Quantity, this.Price, this.Date };
+	}
+	
 	public String toString()
 	{
 		return this.TraderName + " " + this.StrategyUsed + " " + this.CryptoCoin + " " + this.Action + " " + this.Quantity + " " + this.Price + " " + this.Date;
