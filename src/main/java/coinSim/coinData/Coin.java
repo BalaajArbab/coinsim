@@ -35,5 +35,20 @@ public class Coin {
 		return "ID: " + this.Id + ", Symbol: " + this.Symbol + ", Price: " + this.Price + ", MktCap: " + this.MktCap + ", Volume: " + this.Volume;
 	}
 	
+	public double GetPrice()
+	{
+		return this.Price;
+	}
+	
+	public double GetMktCap()
+	{
+		return this.MktCap;
+	}
+	
+	public double GetVolume()
+	{
+		return this.Volume;
+	}
+	
 
 }

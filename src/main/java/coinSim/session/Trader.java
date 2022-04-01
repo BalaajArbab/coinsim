@@ -15,13 +15,27 @@ public class Trader {
 	int TradeStrategy;
 	Hashtable<String, Double> CoinCounts;
 	
+	int TransactionsPerformed;
+	
+	int[] StrategyUseCount;
+	
 	public Trader(String name)
 	{
 		this.Name = name;
 		this.TradeStrategy = -1;
+		this.TransactionsPerformed = 0;
 		
 		CoinsOfInterest = new HashSet<String>();
 		CoinCounts = new Hashtable<String, Double>(); 
+		
+		StrategyUseCount = new int[4];
+		
+		// initializeCoinCounts();
+	}
+	
+	public void IncrementStrategyUseCount(int strategyNumber)
+	{
+		this.StrategyUseCount[--strategyNumber]++;
 	}
 	
 	public void AddCoinOfInterest(String id)
@@ -48,6 +62,41 @@ public class Trader {
 		CoinCounts.put(id, newCount);
 	}
 	
+	private void initializeCoinCounts()
+	{
+		for (String s : this.CoinsOfInterest)
+		{
+			this.CoinCounts.put(s, 0d);
+		}
+	}
+	
+	public boolean BuyCoin(String id, double amount)
+	{
+		double oldCount = this.CoinCounts.get(id);
+		
+		this.CoinCounts.put(id, oldCount + amount);
+		
+		return true;
+	}
+	
+	public boolean SellCoin(String id, double amount)
+	{
+		double oldCount = this.CoinCounts.get(id);
+		
+		if (oldCount >= amount) 
+		{
+			this.CoinCounts.put(id, oldCount - amount);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void IncrementTrades()
+	{
+		this.TransactionsPerformed++;
+	}
+	
 	public void EditName(String newName)
 	{
 		this.Name = newName;
@@ -66,6 +115,11 @@ public class Trader {
 	public int GetTradeStrategy() 
 	{
 		return this.TradeStrategy;
+	}
+	
+	public int[] GetStratUseCounts()
+	{
+		return this.StrategyUseCount;
 	}
 
 }
