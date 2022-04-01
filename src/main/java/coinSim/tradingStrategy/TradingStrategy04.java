@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class TradingStrategy04 extends TradingStrategy {
 
 	private static HashSet<String> coinsOfInterest = new HashSet<String>(Arrays.asList("dogecoin", "ethereum"));
-	public static String StrategyName = "Strategy-03";
+	public static String StrategyName = "Strategy-04";
 	
     public boolean Enact(Trader trader, RecordTable recordTable) {
         
