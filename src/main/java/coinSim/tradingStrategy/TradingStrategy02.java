@@ -38,11 +38,13 @@ public class TradingStrategy02 extends TradingStrategy {
     		}
     	}	
     	
+    	trader.IncrementStrategyUseCount(1);
+    	
     	ArrayList<TradeRecord> records = new ArrayList<TradeRecord>();
     	
     	if (dogecoin.GetPrice() < 1d)
     	{
-    		trader.BuyCoin("bitcoin", 10000);
+    		trader.BuyCoin("dogecoin", 10000);
     		
     		TradeRecord record = new TradeRecord(trader.GetName(), StrategyName, "dogecoin", "Buy", "10000", dogecoin.GetPrice() + "");
     		records.add(record);
@@ -50,7 +52,7 @@ public class TradingStrategy02 extends TradingStrategy {
     	
     	if (dogecoin.GetPrice() > 5d)
     	{
-    		trader.SellCoin("bitcoin", 10000);
+    		trader.SellCoin("dogecoin", 10000);
     		
     		TradeRecord record = new TradeRecord(trader.GetName(), StrategyName, "dogecoin", "Sell", "10000", dogecoin.GetPrice() + "");
     		records.add(record);

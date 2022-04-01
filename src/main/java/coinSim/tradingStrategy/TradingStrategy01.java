@@ -38,6 +38,8 @@ public class TradingStrategy01 extends TradingStrategy {
     		}
     	}	
     	
+    	trader.IncrementStrategyUseCount(1);
+    	
     	ArrayList<TradeRecord> records = new ArrayList<TradeRecord>();
     	
     	if (bitcoin.GetPrice() > 30000d)
