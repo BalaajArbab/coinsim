@@ -17,9 +17,18 @@ import java.util.ArrayList;
 
 public class TradingStrategy02 extends TradingStrategy {
 
-	private static HashSet<String> coinsOfInterest = new HashSet<String>(Arrays.asList("dogecoin", "ethereum"));
+    // set of coins necessary for this trading strategy
+    private static HashSet<String> coinsOfInterest = new HashSet<String>(Arrays.asList("dogecoin", "ethereum"));
+    // name of the trading strategy
 	public static String StrategyName = "Strategy-02";
 	
+    /**
+     * @param  trader
+     *         Trader object of the trader performing a trade using this strategy
+     *         
+     * @param  recordTable
+     *         keeps record of trades performed        
+     */
     public boolean Enact(Trader trader, RecordTable recordTable) {
         
     	Coin dogecoin = coinDB.GetCoin("dogecoin");
