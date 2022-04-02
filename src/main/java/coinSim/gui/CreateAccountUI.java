@@ -2,6 +2,11 @@ package coinSim.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import coinSim.authentication.AccountCreateAuth;
 import coinSim.authentication.authentication;
 
 public class CreateAccountUI implements ActionListener{
@@ -85,8 +91,24 @@ public class CreateAccountUI implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		String user = userText.getText();
 		String password = passwordText.getText();
-		System.out.println(user +","+ password);	
+		String creds = "\n"+user +","+ password;
 		
+		boolean inValid = AccountCreateAuth.validCredentials(user);
+		if (!inValid) {
+			try {
+			      FileWriter myWriter = new FileWriter("users.txt", true);
+			      myWriter.write(creds);
+			      myWriter.close();
+			      System.out.println("Successfully wrote to the file.");
+			      // Call login either from here or from Runner.java on create account success
+			    } catch (IOException e) {
+			      System.out.println("File reading error");
+			      e.printStackTrace();
+			    }
+		}
+		else {
+			System.out.println("Account Exists");
+		}
 		
 		/*
 		 boolean result =authentication.validCredentials(creds);
