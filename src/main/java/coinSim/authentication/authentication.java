@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class authentication {
     // Account valid
-    public boolean validCredentials(String creds) {
+    public static boolean validCredentials(String creds) {
         File myObj = new File("users.txt");
         if (myObj.exists()) {
             Scanner sc;
