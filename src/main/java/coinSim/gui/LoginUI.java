@@ -1,6 +1,7 @@
 package coinSim.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,13 +26,14 @@ public class LoginUI implements ActionListener {
 	private static boolean finalResult;
 	private static String user;
 	private static String pass;
-	
+	private static JFrame frame;
+	private static String [] Args;
 public static void main(String[] args) {
 		
-		
+		Args=args;
 		
 		//creating frame
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 		frame.setSize(350,200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -101,6 +103,19 @@ public static void main(String[] args) {
 		boolean result =authentication.validCredentials(creds);
 		
 		System.out.println(result);
+		if(result == true)
+		{
+			
+			success.setText("Login Successful!");
+			frame.dispose();
+			//And then call OurUI
+			OurUI.main(Args);
+		}
+		
+		else
+		{
+			success.setText("Incorrect Credentials!");
+		}
 	}
 	
 	
