@@ -25,6 +25,7 @@ public class CreateAccountUI implements ActionListener {
 	private static JLabel passwordLabel;
 	private static JPasswordField passwordText;
 	private static JButton button;
+	private static JButton buttonBack;
 	private static JLabel success;
 	private static JFrame frame;
 	private static JPanel panel;
@@ -71,6 +72,13 @@ public class CreateAccountUI implements ActionListener {
 		// Adding button action
 		button.addActionListener(new CreateAccountUI());
 		panel.add(button);
+		
+		// Adding buttonBack Button
+		buttonBack = new JButton("Back");
+		buttonBack.setBounds(220, 80, 80, 25);
+		// Adding button action
+		buttonBack.addActionListener(new LoginUI());
+		panel.add(buttonBack);
 
 		// Adding Success label i.e if login is successful
 		success = new JLabel("");
@@ -78,49 +86,57 @@ public class CreateAccountUI implements ActionListener {
 		panel.add(success);
 
 		frame.setVisible(true);
+		
+		
+		button.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				String user = userText.getText();
+				String password = passwordText.getText();
+				int passHash = authentication.hashCode(password);
+				String creds = "\n" + user + "," + passHash;
+
+				boolean invalid = AccountCreateAuth.validCredentials(user);
+				if (!invalid) {
+					try {
+						FileWriter myWriter = new FileWriter("users.txt", true);
+						myWriter.write(creds);
+						myWriter.close();
+						System.out.println("Successfully wrote to the file.");
+						// Call login either from here or from Runner.java on create account success
+						success.setText("Account Created Successful!");
+						
+						frame.dispose();
+						// And then call LoginUI
+						LoginUI.main(Args);
+						
+						
+					} catch (IOException e) {
+						System.out.println("File reading error");
+						e.printStackTrace();
+					}
+				} else {
+					System.out.println("Account Exists");
+					success.setText("Account Exists");
+				}
+			}
+		});
+
+		buttonBack.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				frame.dispose();
+				// And then call OurUI
+				Runner.main(Args);
+			}
+		});
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		String user = userText.getText();
-		String password = passwordText.getText();
-		int passHash = authentication.hashCode(password);
-		String creds = "\n" + user + "," + passHash;
-
-		boolean invalid = AccountCreateAuth.validCredentials(user);
-		if (!invalid) {
-			try {
-				FileWriter myWriter = new FileWriter("users.txt", true);
-				myWriter.write(creds);
-				myWriter.close();
-				System.out.println("Successfully wrote to the file.");
-				// Call login either from here or from Runner.java on create account success
-				success.setText("Account Created Successful!");
-				
-				frame.dispose();
-				// And then call OurUI
-				LoginUI.main(Args);
-				
-				
-			} catch (IOException e) {
-				System.out.println("File reading error");
-				e.printStackTrace();
-			}
-		} else {
-			System.out.println("Account Exists");
-			success.setText("Account Exists");
-		}
-
-		/*
-		 * boolean result =authentication.validCredentials(creds);
-		 * 
-		 * System.out.println(result); if(result == true) {
-		 * 
-		 * success.setText("Login Successful!"); frame.dispose(); //And then call OurUI
-		 * OurUI.main(Args); }
-		 * 
-		 * else { success.setText("Incorrect Credentials!"); }
-		 */
+		
 	}
 
 }

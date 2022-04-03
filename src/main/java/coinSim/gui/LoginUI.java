@@ -20,13 +20,14 @@ public class LoginUI implements ActionListener {
 	private static JLabel passwordLabel;
 	private static JPasswordField passwordText;
 	private static JButton button;
-	private static JButton button2;
+	private static JButton buttonBack;
 	private static JLabel success;
 	private static boolean finalResult;
 	private static String user;
 	private static String pass;
 	private static JFrame frame;
 	private static String[] Args;
+	
 
 	public static void main(String[] args) {
 
@@ -72,45 +73,60 @@ public class LoginUI implements ActionListener {
 		button.addActionListener(new LoginUI());
 		panel.add(button);
 
-		/*
-		 * 
-		 * //Adding Create Account Button button2 = new JButton("Create Account");
-		 * button2.setBounds(100,80,200,25);
-		 * 
-		 * //Adding button action button2.addActionListener(new createAccountUI());
-		 * panel.add(button2);
-		 */
-
+		// Adding buttonBack Button
+		buttonBack = new JButton("Back");
+		buttonBack.setBounds(100, 80, 80, 25);
+		// Adding button action
+		buttonBack.addActionListener(new LoginUI());
+		panel.add(buttonBack);
+	
 		// Adding Success label i.e if login is successful
 		success = new JLabel("");
 		success.setBounds(10, 110, 300, 25);
 		panel.add(success);
 
 		frame.setVisible(true);
+		
+		button.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				String user = userText.getText();
+				String password = passwordText.getText();
+				int passHash = authentication.hashCode(password);
+				String creds = user + "," + passHash;
+				// System.out.println(user +","+password);
+
+				boolean result = authentication.validCredentials(creds);
+
+				System.out.println(result);
+				if (result == true) {
+
+					success.setText("Login Successful!");
+					frame.dispose();
+					// And then call OurUI
+					OurUI.main(Args);
+				}
+
+				else {
+					success.setText("Incorrect Credentials!");
+				}
+			}
+		});
+
+		buttonBack.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				frame.dispose();
+				// And then call OurUI
+				Runner.main(Args);
+			}
+		});
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		String user = userText.getText();
-		String password = passwordText.getText();
-		int passHash = authentication.hashCode(password);
-		String creds = user + "," + passHash;
-		// System.out.println(user +","+password);
-
-		boolean result = authentication.validCredentials(creds);
-
-		System.out.println(result);
-		if (result == true) {
-
-			success.setText("Login Successful!");
-			frame.dispose();
-			// And then call OurUI
-			OurUI.main(Args);
-		}
-
-		else {
-			success.setText("Incorrect Credentials!");
-		}
 	}
 
 }
