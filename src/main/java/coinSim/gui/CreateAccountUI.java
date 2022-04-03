@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 import coinSim.authentication.AccountCreateAuth;
 import coinSim.authentication.authentication;
 
-public class CreateAccountUI implements ActionListener{
+public class CreateAccountUI implements ActionListener {
 
 	private static JLabel userLabel;
 	private static JTextField userText;
@@ -26,64 +26,54 @@ public class CreateAccountUI implements ActionListener{
 	private static JPasswordField passwordText;
 	private static JButton button;
 	private static JLabel success;
-	
-	
+
 	public static void main(String[] args) {
-		
-		
-		
-		//creating frame
+
+		// creating frame
 		JFrame frame = new JFrame();
-		frame.setSize(350,200);
+		frame.setSize(350, 200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-			
-		//creating panel
+
+		// creating panel
 		JPanel panel = new JPanel();
-		//Put Panel on the frame
+		// Put Panel on the frame
 		frame.add(panel);
-		
-		//Configuring the panel
+
+		// Configuring the panel
 		panel.setLayout(null);
-		
-		//Adding labels
-		 userLabel = new JLabel("User");
-		userLabel.setBounds(10,20,80,25);
+
+		// Adding labels
+		userLabel = new JLabel("User");
+		userLabel.setBounds(10, 20, 80, 25);
 		panel.add(userLabel);
-		
-		//Adding textfield with a default length of 20
-		 userText = new JTextField(20);
-		userText.setBounds(100,20,165,25);
+
+		// Adding textfield with a default length of 20
+		userText = new JTextField(20);
+		userText.setBounds(100, 20, 165, 25);
 		panel.add(userText);
-		
-		//Adding password label and password textbox
+
+		// Adding password label and password textbox
 		passwordLabel = new JLabel("Password");
-		passwordLabel.setBounds(10,50,80,25);
+		passwordLabel.setBounds(10, 50, 80, 25);
 		panel.add(passwordLabel);
-		
+
 		passwordText = new JPasswordField();
 		passwordText.setBounds(100, 50, 165, 25);
 		panel.add(passwordText);
-		
-		
-		//Adding Login Button
+
+		// Adding Login Button
 		button = new JButton("Create New Account");
-		button.setBounds(10,80,200,25);
-		
-		//Adding button action
+		button.setBounds(10, 80, 200, 25);
+
+		// Adding button action
 		button.addActionListener(new CreateAccountUI());
 		panel.add(button);
-		
-		
-		//Adding Success label i.e if login is successful
+
+		// Adding Success label i.e if login is successful
 		success = new JLabel("");
-		success.setBounds(10,110,300,25);
+		success.setBounds(10, 110, 300, 25);
 		panel.add(success);
-		
-	
-		
-		
-	
+
 		frame.setVisible(true);
 	}
 
@@ -91,42 +81,34 @@ public class CreateAccountUI implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		String user = userText.getText();
 		String password = passwordText.getText();
-		String creds = "\n"+user +","+ password;
-		
-		boolean inValid = AccountCreateAuth.validCredentials(user);
-		if (!inValid) {
+		int passHash = authentication.hashCode(password);
+		String creds = "\n" + user + "," + passHash;
+
+		boolean invalid = AccountCreateAuth.validCredentials(user);
+		if (!invalid) {
 			try {
-			      FileWriter myWriter = new FileWriter("users.txt", true);
-			      myWriter.write(creds);
-			      myWriter.close();
-			      System.out.println("Successfully wrote to the file.");
-			      // Call login either from here or from Runner.java on create account success
-			    } catch (IOException e) {
-			      System.out.println("File reading error");
-			      e.printStackTrace();
-			    }
-		}
-		else {
+				FileWriter myWriter = new FileWriter("users.txt", true);
+				myWriter.write(creds);
+				myWriter.close();
+				System.out.println("Successfully wrote to the file.");
+				// Call login either from here or from Runner.java on create account success
+			} catch (IOException e) {
+				System.out.println("File reading error");
+				e.printStackTrace();
+			}
+		} else {
 			System.out.println("Account Exists");
 		}
-		
+
 		/*
-		 boolean result =authentication.validCredentials(creds);
-		
-		System.out.println(result);
-		if(result == true)
-		{
-			
-			success.setText("Login Successful!");
-			frame.dispose();
-			//And then call OurUI
-			OurUI.main(Args);
-		}
-		
-		else
-		{
-			success.setText("Incorrect Credentials!");
-		}
+		 * boolean result =authentication.validCredentials(creds);
+		 * 
+		 * System.out.println(result); if(result == true) {
+		 * 
+		 * success.setText("Login Successful!"); frame.dispose(); //And then call OurUI
+		 * OurUI.main(Args); }
+		 * 
+		 * else { success.setText("Incorrect Credentials!"); }
 		 */
 	}
 
