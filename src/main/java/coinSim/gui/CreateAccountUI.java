@@ -26,16 +26,19 @@ public class CreateAccountUI implements ActionListener {
 	private static JPasswordField passwordText;
 	private static JButton button;
 	private static JLabel success;
+	private static JFrame frame;
+	private static JPanel panel;
+	private static String[] Args;
 
 	public static void main(String[] args) {
-
+		Args=args;
 		// creating frame
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 		frame.setSize(350, 200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// creating panel
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		// Put Panel on the frame
 		frame.add(panel);
 
@@ -92,12 +95,20 @@ public class CreateAccountUI implements ActionListener {
 				myWriter.close();
 				System.out.println("Successfully wrote to the file.");
 				// Call login either from here or from Runner.java on create account success
+				success.setText("Account Created Successful!");
+				
+				frame.dispose();
+				// And then call OurUI
+				LoginUI.main(Args);
+				
+				
 			} catch (IOException e) {
 				System.out.println("File reading error");
 				e.printStackTrace();
 			}
 		} else {
 			System.out.println("Account Exists");
+			success.setText("Account Exists");
 		}
 
 		/*
