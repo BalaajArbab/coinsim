@@ -13,9 +13,16 @@ import javax.swing.JTextField;
 import coinSim.authentication.authentication;
 import coinSim.authentication.login;
 
+/**
+ * The {@code Runner} parent class. Is the splash screen providing the user the option to login or create an account
+ * with credentials entered during login.
+ * 
+ * @author  Anubhav A.
+ */
 public class Runner implements ActionListener {
 	private static JLabel userLabel;
 	private static JTextField userText;
+	private static JLabel titleLabel;
 	private static JLabel passwordLabel;
 	private static JPasswordField passwordText;
 	private static JButton button;
@@ -27,6 +34,11 @@ public class Runner implements ActionListener {
 	private static JFrame frame;
 	private static String[] Args;
 
+	/**
+	 * Constructs the UI interface for the Runner Page
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		Args = args;
@@ -42,6 +54,13 @@ public class Runner implements ActionListener {
 
 		// Configuring the panel
 		panel.setLayout(null);
+		
+		// Adding title label
+		titleLabel = new JLabel("Welcome to CoinSim");
+		titleLabel.setBounds(110, 20, 130, 50);
+		panel.add(titleLabel);
+		
+		
 
 		// Adding Login Button
 		button = new JButton("Login");
@@ -59,25 +78,28 @@ public class Runner implements ActionListener {
 		button2.addActionListener(new Runner());
 		panel.add(button2);
 
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		//////////////////////////////////////////
-		// LoginUI.main(args);
-
+		
+		/**
+		 * Method is called when the login button is clicked which leads to the login page
+		 */
 		button.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				System.out.println("1 clicked");
 				frame.dispose();
 				LoginUI.main(Args);
 			}
 		});
 
+		/**
+		 * Method is called when the Create Account button is clicked which leads to the Create Account page
+		 */
 		button2.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				System.out.println("2 clicked");
 				frame.dispose();
 				CreateAccountUI.main(Args);
 			}
