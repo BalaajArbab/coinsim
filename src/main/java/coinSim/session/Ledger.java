@@ -12,6 +12,8 @@ public class Ledger {
 	ArrayList<Trader> Traders;
 	int TraderCount;
 	
+	boolean populateCalled = false;
+	
 	public Ledger()
 	{
 		this.Traders = new ArrayList<Trader>();
@@ -22,6 +24,8 @@ public class Ledger {
 	
 	public void CreateDefaultLedger()
 	{
+//		this.Traders.clear();
+		if(populateCalled) return;
 		
 		Trader trader1 = new Trader("Trader 1");
 		trader1.AddCoinOfInterest("bitcoin");
@@ -61,7 +65,9 @@ public class Ledger {
 		this.Traders.add(trader4);
 		this.Traders.add(trader5);
 		this.Traders.add(trader6);
+		this.TraderCount += 6;
 		
+		this.populateCalled = true;
 	}
 	
 	public boolean AddTrader(String name)
