@@ -123,7 +123,7 @@ public class CreateAccountUI implements ActionListener {
 				// password
 				int passHash = Encryption.hashCode(password);
 				// creds set to the user credentials formatted correctly
-				String creds = "\n" + user + "," + passHash;
+				String creds = user + "," + passHash + "\n";
 
 				// passes the creds to validCredentials to check if the user already exists
 				boolean invalid = AccountCreateAuth.validCredentials(user);
