@@ -16,6 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import coinSim.authentication.AccountCreateAuth;
+import coinSim.authentication.Encryption;
 import coinSim.authentication.authentication;
 
 public class CreateAccountUI implements ActionListener {
@@ -94,7 +95,7 @@ public class CreateAccountUI implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
 				String user = userText.getText();
 				String password = passwordText.getText();
-				int passHash = authentication.hashCode(password);
+				int passHash = Encryption.hashCode(password);
 				String creds = "\n" + user + "," + passHash;
 
 				boolean invalid = AccountCreateAuth.validCredentials(user);
