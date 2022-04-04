@@ -22,6 +22,7 @@ import coinSim.authentication.login;
 public class Runner implements ActionListener {
 	private static JLabel userLabel;
 	private static JTextField userText;
+	private static JLabel titleLabel;
 	private static JLabel passwordLabel;
 	private static JPasswordField passwordText;
 	private static JButton button;
@@ -33,6 +34,11 @@ public class Runner implements ActionListener {
 	private static JFrame frame;
 	private static String[] Args;
 
+	/**
+	 * Constructs the UI interface for the Runner Page
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		Args = args;
@@ -48,6 +54,13 @@ public class Runner implements ActionListener {
 
 		// Configuring the panel
 		panel.setLayout(null);
+		
+		// Adding title label
+		titleLabel = new JLabel("Welcome to CoinSim");
+		titleLabel.setBounds(110, 20, 130, 50);
+		panel.add(titleLabel);
+		
+		
 
 		// Adding Login Button
 		button = new JButton("Login");
@@ -67,7 +80,10 @@ public class Runner implements ActionListener {
 
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-
+		
+		/**
+		 * Method is called when the login button is clicked which leads to the login page
+		 */
 		button.addActionListener(new ActionListener() {
 
 			@Override
@@ -78,6 +94,9 @@ public class Runner implements ActionListener {
 			}
 		});
 
+		/**
+		 * Method is called when the Create Account button is clicked which leads to the Create Account page
+		 */
 		button2.addActionListener(new ActionListener() {
 
 			@Override
