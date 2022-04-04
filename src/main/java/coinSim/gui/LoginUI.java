@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import coinSim.authentication.Encryption;
 import coinSim.authentication.authentication;
 
 public class LoginUI implements ActionListener {
@@ -93,7 +94,7 @@ public class LoginUI implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
 				String user = userText.getText();
 				String password = passwordText.getText();
-				int passHash = authentication.hashCode(password);
+				int passHash = Encryption.hashCode(password);
 				String creds = user + "," + passHash;
 				// System.out.println(user +","+password);
 
