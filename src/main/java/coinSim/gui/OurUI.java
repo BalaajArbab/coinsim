@@ -457,7 +457,7 @@ public class OurUI extends JFrame implements ActionListener
 //			dataset.setValue(6, "Trader-1", "Strategy-A");
 //			dataset.setValue(5, "Trader-2", "Strategy-B");
 //			dataset.setValue(0, "Trader-3", "Strategy-E");
-//			dataset.setValue(1, "Trader-4", "Strategy-C");
+//			dataset.setValue(2, "Trader-4", "Strategy-C");
 //			dataset.setValue(10, "Trader-5", "Strategy-D");
 	
 			CategoryPlot plot = new CategoryPlot();
