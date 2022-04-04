@@ -83,7 +83,7 @@ public class CoinFetcher {
 			
 			// delay to prevent exceeding api call limits
 			try {
-                Thread.sleep(1000);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -109,7 +109,7 @@ public class CoinFetcher {
 			
 			// delay to prevent exceeding api call limits
 			try {
-                Thread.sleep(1000);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -118,6 +118,15 @@ public class CoinFetcher {
 		
 		coinDB.PrintCoins();
 		
+	}
+	
+	public static void InstantiateCoinObjects()
+	{
+		for (String id : CoinDB.coinList)
+		{
+			Coin coin = new Coin(id, "xxx", 0d, 0d, 0d);
+			coinDB.AddCoin(id, coin);
+		}
 	}
 	
 	
