@@ -1,11 +1,12 @@
-/**
- * A Ledger object which holds the Trader objects of the system.
- * @author Balaaj Arbab
- */
 
 package coinSim.session;
 
 import java.util.ArrayList;
+
+/**
+ * A Ledger object which holds the Trader objects of the system.
+ * @author Balaaj Arbab
+ */
 
 public class Ledger {
 	
@@ -21,7 +22,10 @@ public class Ledger {
 		
 	}
 	
-	
+	/**
+	 * Populates the ledger object with some preset hard-coded traders.
+     * 
+     */
 	public void CreateDefaultLedger()
 	{
 //		this.Traders.clear();
@@ -70,6 +74,12 @@ public class Ledger {
 		this.populateCalled = true;
 	}
 	
+	/**
+     * @param  name
+     * 		   The name of the trader to be added.
+     *         
+     * @return returns a boolean of whether the trader was successfully added or not.
+     */
 	public boolean AddTrader(String name)
 	{
 		if (!TraderExistsWithName(name))
@@ -85,7 +95,12 @@ public class Ledger {
 		return false;
 	}
 	
-	
+	/**
+     * @param  name
+     * 		   The name of the trader to be removed.
+     *         
+     * @return returns a boolean of whether the trader was successfully removed or not.
+     */
 	public boolean RemoveTrader(int index)
 	{
 		// TODO
@@ -100,7 +115,12 @@ public class Ledger {
 		return false;
 	}
 	
-	
+	/**
+     * @param  name
+     * 		   The name to be checked.
+     *         
+     * @return returns a boolean of whether a trader with given name exists or not.
+     */
 	private boolean TraderExistsWithName(String name)
 	{
 		for (Trader trader : this.Traders)
@@ -111,16 +131,29 @@ public class Ledger {
 		return false;
 	}
 	
+	/**
+     *         
+     * @return returns a list of Traders currently in the ledger.
+     */
 	public ArrayList<Trader> GetTraders()
 	{
 		return this.Traders;
 	}
 	
+	/**
+     *         
+     * @return returns the Trader at given index.
+     */
 	public Trader GetTraderAtIndex(int index)
 	{
 		return this.Traders.get(index);
 	}
 	
+	/**
+	 * Sets the strategies of trader objects by index.
+     *         
+     * @param A vector of the strategies to set for the corresponding trader.
+     */
 	public void SetStrategies(ArrayList<Integer> strategies)
 	{
 		for (int i = 0; i < this.TraderCount; i++)
@@ -130,19 +163,14 @@ public class Ledger {
 		
 	}
 	
-	public void PrintStrategies()
-	{
-		for (Trader trader : this.Traders)
-		{
-			System.out.println(trader.GetTradeStrategy());
-		}
-	}
+//	public void PrintStrategies()
+//	{
+//		for (Trader trader : this.Traders)
+//		{
+//			System.out.println(trader.GetTradeStrategy());
+//		}
+//	}
+//	
 	
-	
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

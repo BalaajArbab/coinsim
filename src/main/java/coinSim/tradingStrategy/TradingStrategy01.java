@@ -22,8 +22,12 @@ public class TradingStrategy01 extends TradingStrategy {
 	private static HashSet<String> coinsOfInterest = new HashSet<String>(Arrays.asList("bitcoin", "ethereum"));
 	public static String StrategyName = "Strategy-01";
 	
-    /**
-     * 
+	/**
+     * @param  trader
+     *         Trader object of the trader performing a trade using this strategy
+     *         
+     * @param  recordTable
+     *         keeps record of all trades performed across traders
      */
     public boolean Enact(Trader trader, RecordTable recordTable) {
         

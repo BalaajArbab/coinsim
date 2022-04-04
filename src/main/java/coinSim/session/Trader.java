@@ -19,6 +19,11 @@ public class Trader {
 	
 	int[] StrategyUseCount;
 	
+	/**
+	 * Creates a trader with given name.
+	 * 
+	 * @param name
+	 */
 	public Trader(String name)
 	{
 		this.Name = name;
@@ -33,11 +38,20 @@ public class Trader {
 		// initializeCoinCounts();
 	}
 	
+	/**
+	 * Increments the use count of the given strategy number for this trader object.
+	 * 
+	 * @param strategyNumber
+	 */
 	public void IncrementStrategyUseCount(int strategyNumber)
 	{
 		this.StrategyUseCount[--strategyNumber]++;
 	}
 	
+	/** Adds the id as a coin of interest for this trader object.
+	 * 
+	 * @param id
+	 */
 	public void AddCoinOfInterest(String id)
 	{
 		if (!CoinsOfInterest.contains(id))
@@ -47,21 +61,37 @@ public class Trader {
 		}
 	}
 	
+	/** Removes the id as a coin of interest for this trader object.
+	 * 
+	 * @param id
+	 */
 	public void RemoveCoinOfInterest(String id)
 	{
 		this.CoinsOfInterest.remove(id);
 	}
 	
+	/** Sets the trade strategy for this trader object.
+	 * 
+	 * @param number
+	 */
 	public void SetTradeStrategy(int number)
 	{
 		this.TradeStrategy = number;
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @param newCount
+	 */
 	public void UpdateCoinCount(String id, double newCount)
 	{
 		CoinCounts.put(id, newCount);
 	}
 	
+	/**
+	 * 
+	 */
 	private void initializeCoinCounts()
 	{
 		for (String s : this.CoinsOfInterest)
@@ -70,6 +100,12 @@ public class Trader {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @param amount
+	 * @return
+	 */
 	public boolean BuyCoin(String id, double amount)
 	{
 		double oldCount = this.CoinCounts.get(id);
@@ -79,6 +115,12 @@ public class Trader {
 		return true;
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @param amount
+	 * @return
+	 */
 	public boolean SellCoin(String id, double amount)
 	{
 		double oldCount = this.CoinCounts.get(id);
@@ -92,31 +134,54 @@ public class Trader {
 		return false;
 	}
 	
+	/**
+	 * Increment the trades performed for this trader.
+	 */
 	public void IncrementTrades()
 	{
 		this.TransactionsPerformed++;
 	}
 	
+	/**
+	 * Edits the name of this trader object.
+	 * @param newName
+	 */
 	public void EditName(String newName)
 	{
 		this.Name = newName;
 	}
 	
+	/**
+	 * 
+	 * @return name of this trader object.
+	 */
 	public String GetName()
 	{
 		return this.Name;
 	}
 	
+	/**
+	 * 
+	 * @return HashSet of the coins of interest of this trader object.
+	 */
 	public HashSet<String> GetCoinsOfInterest()
 	{
 		return this.CoinsOfInterest;
 	}
 	
+	/**
+	 * 
+	 * @return the int representing the trade strategy of this trader object.
+	 */
 	public int GetTradeStrategy() 
 	{
 		return this.TradeStrategy;
 	}
 	
+	/**
+	 * 
+	 * @return an integer array of the usage counts of strategies.
+	 */
 	public int[] GetStratUseCounts()
 	{
 		return this.StrategyUseCount;

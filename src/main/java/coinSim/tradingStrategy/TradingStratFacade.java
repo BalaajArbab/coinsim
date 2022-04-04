@@ -4,8 +4,25 @@ import coinSim.coinData.*;
 import coinSim.session.*;
 import coinSim.records.*;
 
+/**
+ * Implements the Facade design pattern to perform a tradde operation in the software. The facade
+ * DP hides the implementation details and simplifies the call.
+ * 
+ * @author  Balaaj A.
+ * 
+ */
+
 public class TradingStratFacade {
 	
+	/**
+     * @param  ledger
+     * 		   The ledger object of trades to perform trades with.
+     *         
+     * @param  recordTable
+     *         The RecordTable object which holds the history of trades performed.
+     *         
+     * @return returns a boolean of whether at least one trade was performed or not.
+     */
 	public static boolean PerformTrade(Ledger ledger, RecordTable recordTable)
 	{
 		
