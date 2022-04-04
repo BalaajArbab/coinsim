@@ -11,7 +11,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import coinSim.authentication.authentication;
-import coinSim.authentication.login;
 
 /**
  * The {@code Runner} parent class. Is the splash screen providing the user the option to login or create an account

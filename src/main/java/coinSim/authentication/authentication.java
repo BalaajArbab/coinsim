@@ -12,7 +12,12 @@ import java.util.Scanner;
  * @author Rishabh J.
  */
 public class authentication {
-	// validCredentials receives the entered creds from login method
+	/**
+	 * validCredentials receives the entered creds from login method
+	 * 
+	 * @param creds is passed from login UI
+	 * @return boolean based on credentials match
+	 */
 	public static boolean validCredentials(String creds) {
 		// Opens the file containing credentials
 		File myObj = new File("users.txt");
