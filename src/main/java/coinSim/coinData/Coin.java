@@ -32,7 +32,7 @@ public class Coin {
 	
 	public String toString()
 	{
-		return "ID: " + this.Id + ", Symbol: " + this.Symbol + ", Price: " + this.Price + ", MktCap: " + this.MktCap + ", Volume: " + this.Volume;
+		return "ID: " + this.Id + ", Price: " + this.Price + ", MktCap: " + this.MktCap + ", Volume: " + this.Volume;
 	}
 	
 	public double GetPrice()

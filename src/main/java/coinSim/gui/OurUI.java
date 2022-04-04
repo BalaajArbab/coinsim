@@ -66,7 +66,7 @@ public class OurUI extends JFrame implements ActionListener
 	}
 	
 	private Ledger ledger;
-	private CoinDB coinDB;
+//	private CoinDB coinDB;
 	private RecordTable recordTable;
 	
 	private DefaultTableModel dtm;
@@ -77,7 +77,6 @@ public class OurUI extends JFrame implements ActionListener
 	
 	private TraderViewer traderViewer;
 	
-	// Put in array of Viewer[]?
 	private RecordViewer recordViewer;
 	private HistogramViewer histViewer;
 	
@@ -91,11 +90,12 @@ public class OurUI extends JFrame implements ActionListener
 		// Set window title
 		super("CoinSim");
 		
-		CoinFetcher.FetchFirstTime();
+//		CoinFetcher.FetchFirstTime();
+		CoinFetcher.InstantiateCoinObjects();
 		
 		this.ledger = new Ledger();
 		this.recordTable = new RecordTable();
-		this.coinDB = CoinDB.GetInstance();
+//		this.coinDB = CoinDB.GetInstance();
 		
 		
 		
@@ -143,6 +143,10 @@ public class OurUI extends JFrame implements ActionListener
 		confirmStrategySelection.setActionCommand("confirmStrat");
 		confirmStrategySelection.addActionListener(this);
 		
+		JButton createDefault = new JButton("Populate Ledger With Traders");
+		createDefault.setActionCommand("createDefault");
+		createDefault.addActionListener(this);
+		
 		scrollPane.setPreferredSize(new Dimension(800, 300));
 		table.setFillsViewportHeight(true);
 		
@@ -167,6 +171,11 @@ public class OurUI extends JFrame implements ActionListener
 		stratButtons.setLayout(new BoxLayout(stratButtons, BoxLayout.X_AXIS));
 		stratButtons.add(confirmStrategySelection);
 		east.add(stratButtons);
+		
+		JPanel ledgerButton = new JPanel();
+		ledgerButton.setLayout(new BoxLayout(ledgerButton, BoxLayout.X_AXIS));
+		ledgerButton.add(createDefault);
+		east.add(ledgerButton);
 		
 		
 		JButton trade = new JButton("Perform Trade");
@@ -250,36 +259,13 @@ public class OurUI extends JFrame implements ActionListener
 		String command = e.getActionCommand();
 		if ("performTrade".equals(command)) 
 		{
-////			
-//			
-//			CoinFetcher.Fetch();
-//			
-//			// coinDB.PrintCoins();
-//			
-//			boolean atleastOneTradePerformed = false;
-//			
-//			for (Trader trader : this.ledger.GetTraders())
-//			{
-//				TradingStrategy strat = StrategyCreator.CreateStrategy(trader.GetTradeStrategy());
-//				
-//				
-//				if (strat != null)
-//				{					
-//					boolean tradePerformed = strat.Enact(trader, recordTable);
-//					
-//					if (!tradePerformed)
-//					{
-//						System.out.println("Trade not performed for " + trader.GetName() + " due to mismatch of coins of interest");
-//					}
-//					else atleastOneTradePerformed = true;
-//				}
-//			}
 			
 			boolean atleastOneTradePerformed = TradingStratFacade.PerformTrade(ledger, recordTable);
 			
+			
 			this.traderViewer.Notify(); // To fix trade strategy selected in view, if confirm button was not pressed.
 			
-			
+			// If at least one trade has been performed, notify output viewers.
 			if (atleastOneTradePerformed)
 			{
 				// traderViewer not included in this as it is of a different nature (not output).
@@ -288,9 +274,6 @@ public class OurUI extends JFrame implements ActionListener
 					viewer.Notify();
 				}
 			}
-			
-			
-			//recordTable.PrintRecords();
 			
 		} 
 		else if ("addTrader".equals(command)) 
@@ -317,6 +300,10 @@ public class OurUI extends JFrame implements ActionListener
 		{
 			confirmStrat();	
 			
+		}
+		else if ("createDefault".equals(command)) 
+		{
+			createDefaultLedger();
 		}
 	}
 	
@@ -457,5 +444,12 @@ public class OurUI extends JFrame implements ActionListener
 			return chartPanel;
 
 		}
+	
+	private void createDefaultLedger()
+	{
+		this.ledger.CreateDefaultLedger();
+		
+		traderViewer.Notify();
+	}
 
 }

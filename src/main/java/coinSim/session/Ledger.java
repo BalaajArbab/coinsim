@@ -19,6 +19,51 @@ public class Ledger {
 		
 	}
 	
+	
+	public void CreateDefaultLedger()
+	{
+		
+		Trader trader1 = new Trader("Trader 1");
+		trader1.AddCoinOfInterest("bitcoin");
+		trader1.AddCoinOfInterest("ethereum");
+		trader1.SetTradeStrategy(1);
+		
+		Trader trader2 = new Trader("Tester 2");
+		trader2.AddCoinOfInterest("ethereum");
+		trader2.AddCoinOfInterest("dogecoin");
+		trader2.SetTradeStrategy(2);
+		
+		Trader trader3 = new Trader("Tai-Lung");
+		trader3.AddCoinOfInterest("dogecoin");
+		trader3.SetTradeStrategy(1);
+		
+		Trader trader4 = new Trader("Ranchoddas Chanchad");
+		trader4.AddCoinOfInterest("solana");
+		trader4.AddCoinOfInterest("dash");
+		trader4.SetTradeStrategy(3);
+		
+		Trader trader5 = new Trader("Shin Chan");
+		trader5.AddCoinOfInterest("avalanche-2");
+		trader5.AddCoinOfInterest("terra-luna");
+		trader5.AddCoinOfInterest("aave");
+		trader5.AddCoinOfInterest("maker");
+		trader5.SetTradeStrategy(4);
+		
+		Trader trader6 = new Trader("Sachin Tendulkar");
+		trader6.AddCoinOfInterest("bitcoin");
+		trader6.AddCoinOfInterest("ethereum");
+		trader6.AddCoinOfInterest("dogecoin");
+		trader6.SetTradeStrategy(2);
+		
+		this.Traders.add(trader1);
+		this.Traders.add(trader2);
+		this.Traders.add(trader3);
+		this.Traders.add(trader4);
+		this.Traders.add(trader5);
+		this.Traders.add(trader6);
+		
+	}
+	
 	public boolean AddTrader(String name)
 	{
 		if (!TraderExistsWithName(name))
@@ -33,6 +78,7 @@ public class Ledger {
 		
 		return false;
 	}
+	
 	
 	public boolean RemoveTrader(int index)
 	{
