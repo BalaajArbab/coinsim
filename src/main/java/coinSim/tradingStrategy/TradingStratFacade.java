@@ -5,8 +5,9 @@ import coinSim.session.*;
 import coinSim.records.*;
 
 /**
- * Implements the Facade design pattern to perform a tradde operation in the software. The facade
+ * Implements the Facade design pattern to perform a trade operation in the software. The facade
  * DP hides the implementation details and simplifies the call.
+ * The Strategy design pattern is used to perform the relevant trade strategy on a trader object.
  * 
  * @author  Balaaj A.
  * 
@@ -39,6 +40,7 @@ public class TradingStratFacade {
 			
 			if (strat != null)
 			{					
+				// Implements the strategy design pattern.
 				boolean tradePerformed = strat.Enact(trader, recordTable);
 				
 				if (!tradePerformed)
