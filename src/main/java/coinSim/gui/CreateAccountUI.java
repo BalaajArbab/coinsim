@@ -20,10 +20,11 @@ import coinSim.authentication.Encryption;
 import coinSim.authentication.authentication;
 
 /**
- * The {@code CreateAccountUI} parent class. Contains the UI for creating the account.
+ * The {@code CreateAccountUI} parent class. Contains the UI for creating the
+ * account.
  * 
- * @author  Anubhav A.
- * @author  Rishabh J.
+ * @author Anubhav A.
+ * @author Rishabh J.
  * 
  */
 public class CreateAccountUI implements ActionListener {
@@ -39,10 +40,12 @@ public class CreateAccountUI implements ActionListener {
 	private static JFrame frame;
 	private static JPanel panel;
 	private static String[] Args;
-/**
- * Constructs the UI interface for the CreateAccount Page
- * @param args
- */
+
+	/**
+	 * Constructs the UI interface for the CreateAccount Page
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Args = args;
 		// creating frame
@@ -57,7 +60,7 @@ public class CreateAccountUI implements ActionListener {
 
 		// Configuring the panel
 		panel.setLayout(null);
-		
+
 		// Adding Title Label
 		titleLabel = new JLabel("Create Account Page");
 		titleLabel.setBounds(110, 20, 130, 25);
@@ -84,7 +87,7 @@ public class CreateAccountUI implements ActionListener {
 
 		// Adding Login Button
 		button = new JButton("Confirm");
-		button.setBounds(80,130, 80, 25);
+		button.setBounds(80, 130, 80, 25);
 
 		// Adding button action
 		button.addActionListener(new CreateAccountUI());
@@ -106,7 +109,8 @@ public class CreateAccountUI implements ActionListener {
 		frame.setVisible(true);
 
 		/**
-		 * Method is called when the confirm button is clicked which leads to the login page once account creation is confirmed
+		 * Method is called when the confirm button is clicked which leads to the login
+		 * page once account creation is confirmed
 		 */
 		button.addActionListener(new ActionListener() {
 
@@ -115,14 +119,15 @@ public class CreateAccountUI implements ActionListener {
 				// Collects the username and password from the text fields
 				String user = userText.getText();
 				String password = passwordText.getText();
-				// Passes the password to the hashCode function which returns the hashed password
+				// Passes the password to the hashCode function which returns the hashed
+				// password
 				int passHash = Encryption.hashCode(password);
 				// creds set to the user credentials formatted correctly
-				String creds = "\n" + user + "," + passHash;
+				String creds = user + "," + passHash + "\n";
 
 				// passes the creds to validCredentials to check if the user already exists
 				boolean invalid = AccountCreateAuth.validCredentials(user);
-				
+
 				// If it is not invalid (user does not exist) writes the credentials to the file
 				if (!invalid) {
 					try {
@@ -143,9 +148,10 @@ public class CreateAccountUI implements ActionListener {
 				}
 			}
 		});
-		
+
 		/**
-		 * Method is called when the back button is clicked which leads to the Runner page
+		 * Method is called when the back button is clicked which leads to the Runner
+		 * page
 		 */
 		buttonBack.addActionListener(new ActionListener() {
 

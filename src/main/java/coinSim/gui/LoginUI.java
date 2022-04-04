@@ -13,11 +13,12 @@ import javax.swing.JTextField;
 
 import coinSim.authentication.Encryption;
 import coinSim.authentication.authentication;
+
 /**
  * The {@code LoginUI} parent class. Contains instantiation of Login UI.
  * 
- * @author  Anubhav A.
- * @author	Rishabh J.
+ * @author Anubhav A.
+ * @author Rishabh J.
  * 
  */
 public class LoginUI implements ActionListener {
@@ -35,8 +36,7 @@ public class LoginUI implements ActionListener {
 	private static String pass;
 	private static JFrame frame;
 	private static String[] Args;
-	
-	
+
 	/**
 	 * Constructs the UI interface for the Login Page
 	 * 
@@ -59,7 +59,7 @@ public class LoginUI implements ActionListener {
 
 		// Configuring the panel
 		panel.setLayout(null);
-		
+
 		// Adding title label
 		titleLabel = new JLabel("Login Page");
 		titleLabel.setBounds(130, 20, 80, 25);
@@ -86,7 +86,7 @@ public class LoginUI implements ActionListener {
 
 		// Adding Login Button
 		button = new JButton("Login");
-		button.setBounds(80,130, 80, 25);
+		button.setBounds(80, 130, 80, 25);
 
 		// Adding button action
 		button.addActionListener(new LoginUI());
@@ -98,20 +98,18 @@ public class LoginUI implements ActionListener {
 		// Adding button action
 		buttonBack.addActionListener(new LoginUI());
 		panel.add(buttonBack);
-	
+
 		// Adding Success label i.e if login is successful
 		success = new JLabel("");
 		success.setBounds(100, 150, 300, 25);
 		panel.add(success);
 
-		
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		
-		
-		
+
 		/**
-		 * Method is called when the login button is clicked which leads to the ourUI page
+		 * Method is called when the login button is clicked which leads to the ourUI
+		 * page
 		 */
 		button.addActionListener(new ActionListener() {
 
@@ -120,12 +118,14 @@ public class LoginUI implements ActionListener {
 				// Collects the username and password from the text fields
 				String user = userText.getText();
 				String password = passwordText.getText();
-				// Passes the password to the hashCode function which returns the hashed password
+				// Passes the password to the hashCode function which returns the hashed
+				// password
 				int passHash = Encryption.hashCode(password);
 				// creds set to the user credentials formatted correctly
 				String creds = user + "," + passHash;
 
-				// passes the creds to validCredentials to check if the entered credentials match stored records
+				// passes the creds to validCredentials to check if the entered credentials
+				// match stored records
 				boolean result = authentication.validCredentials(creds);
 
 				// On authorization proceed to OurUI
@@ -143,7 +143,8 @@ public class LoginUI implements ActionListener {
 		});
 
 		/**
-		 * Method is called when the back button is clicked which leads to the Runner page
+		 * Method is called when the back button is clicked which leads to the Runner
+		 * page
 		 */
 		buttonBack.addActionListener(new ActionListener() {
 
