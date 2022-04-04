@@ -5,31 +5,36 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * The {@code authentication} parent class. Is used to authenticate the user
+ * with credentials entered during login.
+ * 
+ * @author Rishabh J.
+ */
 public class authentication {
-	// Account valid
+	// validCredentials receives the entered creds from login method
 	public static boolean validCredentials(String creds) {
+		// Opens the file containing credentials
 		File myObj = new File("users.txt");
-		if (myObj.exists()) {
-			Scanner sc;
-			try {
-				sc = new Scanner(myObj);
-				// returns true if there is another line to read
-				while (sc.hasNextLine()) {
-					if (sc.nextLine().equals(creds)) {
-						return true;
-					}
+		Scanner sc;
+		try {
+			sc = new Scanner(myObj);
+			// returns true if the line being read matches the creds
+			while (sc.hasNextLine()) {
+				if (sc.nextLine().equals(creds)) {
+					return true;
 				}
-				sc.close();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return false;
-			} // file to be scanned
-				// closes the scanner
-		} else {
-			System.out.println("The file does not exist.");
+			}
+			// closes the scanner
+			sc.close();
+		}
+		// file not found
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
 			return false;
 		}
+		// match not found
 		return false;
 	}
+
 }

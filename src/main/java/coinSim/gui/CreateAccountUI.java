@@ -19,6 +19,13 @@ import coinSim.authentication.AccountCreateAuth;
 import coinSim.authentication.Encryption;
 import coinSim.authentication.authentication;
 
+/**
+ * The {@code CreateAccountUI} parent class. Contains the UI for creating the account.
+ * 
+ * @author  Anubhav A.
+ * @author  Rishabh J.
+ * 
+ */
 public class CreateAccountUI implements ActionListener {
 
 	private static JLabel userLabel;
@@ -33,7 +40,7 @@ public class CreateAccountUI implements ActionListener {
 	private static String[] Args;
 
 	public static void main(String[] args) {
-		Args=args;
+		Args = args;
 		// creating frame
 		frame = new JFrame();
 		frame.setSize(350, 200);
@@ -73,7 +80,7 @@ public class CreateAccountUI implements ActionListener {
 		// Adding button action
 		button.addActionListener(new CreateAccountUI());
 		panel.add(button);
-		
+
 		// Adding buttonBack Button
 		buttonBack = new JButton("Back");
 		buttonBack.setBounds(220, 80, 80, 25);
@@ -87,38 +94,38 @@ public class CreateAccountUI implements ActionListener {
 		panel.add(success);
 
 		frame.setVisible(true);
-		
-		
+
 		button.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
+				// Collects the username and password from the text fields
 				String user = userText.getText();
 				String password = passwordText.getText();
+				// Passes the password to the hashCode function which returns the hashed password
 				int passHash = Encryption.hashCode(password);
+				// creds set to the user credentials formatted correctly
 				String creds = "\n" + user + "," + passHash;
 
+				// passes the creds to validCredentials to check if the user already exists
 				boolean invalid = AccountCreateAuth.validCredentials(user);
+				// If it is not invalid (user does not exist) writes the credentials to the file
 				if (!invalid) {
 					try {
 						FileWriter myWriter = new FileWriter("users.txt", true);
 						myWriter.write(creds);
 						myWriter.close();
 						System.out.println("Successfully wrote to the file.");
-						// Call login either from here or from Runner.java on create account success
 						success.setText("Account Created Successful!");
-						
 						frame.dispose();
-						// And then call LoginUI
+						// On successful account creation login is called
 						LoginUI.main(Args);
-						
-						
+
 					} catch (IOException e) {
 						System.out.println("File reading error");
 						e.printStackTrace();
 					}
 				} else {
-					System.out.println("Account Exists");
 					success.setText("Account Exists");
 				}
 			}
@@ -129,7 +136,6 @@ public class CreateAccountUI implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				frame.dispose();
-				// And then call OurUI
 				Runner.main(Args);
 			}
 		});
@@ -137,7 +143,7 @@ public class CreateAccountUI implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		
+
 	}
 
 }

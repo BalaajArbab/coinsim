@@ -13,6 +13,12 @@ import javax.swing.JTextField;
 import coinSim.authentication.authentication;
 import coinSim.authentication.login;
 
+/**
+ * The {@code Runner} parent class. Is the splash screen providing the user the option to login or create an account
+ * with credentials entered during login.
+ * 
+ * @author  Anubhav A.
+ */
 public class Runner implements ActionListener {
 	private static JLabel userLabel;
 	private static JTextField userText;
@@ -60,8 +66,6 @@ public class Runner implements ActionListener {
 		panel.add(button2);
 
 		frame.setVisible(true);
-		//////////////////////////////////////////
-		// LoginUI.main(args);
 
 		button.addActionListener(new ActionListener() {
 
