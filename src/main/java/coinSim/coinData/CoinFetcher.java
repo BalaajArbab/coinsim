@@ -1,7 +1,7 @@
 package coinSim.coinData;
 
 import coinSim.utils.DataFetcher;
-
+import com.google.gson.JsonObject;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -52,19 +52,22 @@ public class CoinFetcher {
 		LocalDate date = LocalDate.now();
 		String dateString = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 		
-		double price = fetcher.getPriceForCoin(id, dateString);
-		double mktCap = fetcher.getMarketCapForCoin(id, dateString);
-		double vol = fetcher.getVolumeForCoin(id, dateString);
+		JsonObject jsonObject = fetcher.getDataForCrypto(id, dateString);
+		
+		double price = fetcher.getPriceForCoin(jsonObject);
+		double mktCap = fetcher.getMarketCapForCoin(jsonObject);
+		double vol = fetcher.getVolumeForCoin(jsonObject);
 		
 		coin.UpdateCoin(price, mktCap, vol);
 	}
 	
 	private static void FetchAndUpdateCoin(String id, String dateString, Coin coin)
 	{
+		JsonObject jsonObject = fetcher.getDataForCrypto(id, dateString);
 		
-		double price = fetcher.getPriceForCoin(id, dateString);
-		double mktCap = fetcher.getMarketCapForCoin(id, dateString);
-		double vol = fetcher.getVolumeForCoin(id, dateString);
+		double price = fetcher.getPriceForCoin(jsonObject);
+		double mktCap = fetcher.getMarketCapForCoin(jsonObject);
+		double vol = fetcher.getVolumeForCoin(jsonObject);
 		
 		coin.UpdateCoin(price, mktCap, vol);
 	}
@@ -72,6 +75,7 @@ public class CoinFetcher {
 	/**
 	 * Fetches data on all cryptocoins specified in coinDB.coinList and updates the associated
 	 * coin object.
+	 * 
 	 */
 	public static void Fetch()
 	{
@@ -83,7 +87,7 @@ public class CoinFetcher {
 			
 			// delay to prevent exceeding api call limits
 			try {
-                Thread.sleep(1500);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

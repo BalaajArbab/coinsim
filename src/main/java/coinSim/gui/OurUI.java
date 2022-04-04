@@ -266,7 +266,7 @@ public class OurUI extends JFrame implements ActionListener
 		{
 			long timePassed = this.sw.getTime() / 1000;
 			
-			int waitTime = 45;
+			int waitTime = 30;
 			
 			
 			if (!this.firstTrade && !(timePassed >= waitTime))
@@ -321,6 +321,7 @@ public class OurUI extends JFrame implements ActionListener
 		else if ("createDefault".equals(command)) 
 		{
 			createDefaultLedger();
+			
 		}
 	}
 	
@@ -409,6 +410,8 @@ public class OurUI extends JFrame implements ActionListener
 		{
 			String value = (String)dtm.getValueAt(i, 2);
 			
+			System.out.println(value);
+			
 			switch(value)
 			{
 				case "None": 
@@ -465,6 +468,7 @@ public class OurUI extends JFrame implements ActionListener
 	private void createDefaultLedger()
 	{
 		this.ledger.CreateDefaultLedger();
+		
 		
 		traderViewer.Notify();
 	}
