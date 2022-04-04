@@ -54,7 +54,7 @@ public class OurUI extends JFrame implements ActionListener
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static String[] coinList = new String[] {"bitcoin", "ethereum", "dogecoin", "solana", "dash", "terra-luna", "avalance-2", "aave", "maker"};
+	private String[] coinList = CoinDB.coinList;
 	
 	private static OurUI instance;
 	
@@ -251,32 +251,11 @@ public class OurUI extends JFrame implements ActionListener
 		String command = e.getActionCommand();
 		if ("performTrade".equals(command)) 
 		{
-//			for (int count = 0; count < dtm.getRowCount(); count++)
-//			{
-//					Object traderObject = dtm.getValueAt(count, 0);
-//					if (traderObject == null) {
-//						JOptionPane.showMessageDialog(this, "please fill in Trader name on line " + (count + 1) );
-//						return;
-//					}
-//					String traderName = traderObject.toString();
-//					Object coinObject = dtm.getValueAt(count, 1);
-//					if (coinObject == null) {
-//						JOptionPane.showMessageDialog(this, "please fill in cryptocoin list on line " + (count + 1) );
-//						return;
-//					}
-//					String[] coinNames = coinObject.toString().split(",");
-//					Object strategyObject = dtm.getValueAt(count, 2);
-//					if (strategyObject == null) {
-//						JOptionPane.showMessageDialog(this, "please fill in strategy name on line " + (count + 1) );
-//						return;
-//					}
-//					String strategyName = strategyObject.toString();
-//					System.out.println(traderName + " " + Arrays.toString(coinNames) + " " + strategyName);
-//	        }
+//			
 			
-			CoinFetcher.Fetch(new ArrayList<String>(Arrays.asList(coinList)));
+			CoinFetcher.Fetch(new ArrayList<String>(Arrays.asList(this.coinList)));
 			
-			coinDB.PrintCoins();
+			// coinDB.PrintCoins();
 			
 			boolean atleastOneTradePerformed = false;
 			
@@ -452,13 +431,6 @@ public class OurUI extends JFrame implements ActionListener
 	private ChartPanel createChartPanel() {
 			
 			this.dataset = new DefaultCategoryDataset();
-	//		Those are hard-coded values!!!! 
-	//		You will have to come up with a proper datastructure to populate the BarChart with live data!
-//			dataset.setValue(6, "Trader-1", "Strategy-A");
-//			dataset.setValue(5, "Trader-2", "Strategy-B");
-//			dataset.setValue(0, "Trader-3", "Strategy-E");
-//			dataset.setValue(2, "Trader-4", "Strategy-C");
-//			dataset.setValue(10, "Trader-5", "Strategy-D");
 	
 			CategoryPlot plot = new CategoryPlot();
 			BarRenderer barrenderer1 = new BarRenderer();
@@ -468,7 +440,7 @@ public class OurUI extends JFrame implements ActionListener
 			CategoryAxis domainAxis = new CategoryAxis("Strategy");
 			plot.setDomainAxis(domainAxis);
 			LogAxis rangeAxis = new LogAxis("Actions(Buys or Sells)");
-			rangeAxis.setRange(new Range(1.0, 20.0));
+			rangeAxis.setRange(new Range(0.1, 20.0));
 			plot.setRangeAxis(rangeAxis);
 			
 	
