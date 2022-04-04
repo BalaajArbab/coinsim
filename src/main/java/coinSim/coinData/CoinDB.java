@@ -13,6 +13,8 @@ public class CoinDB {
 	// Singleton
 	private static CoinDB instance;
 	
+	public static String[] coinList = new String[] {"bitcoin", "ethereum", "dogecoin", "solana", "dash", "terra-luna", "avalanche-2", "aave", "maker"};
+	
 	private Hashtable<String, Coin> CoinDict;
 	
 	private CoinDB()

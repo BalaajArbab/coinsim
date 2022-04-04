@@ -70,12 +70,12 @@ public class CoinFetcher {
 	}
 	
 	/**
-	 * 
-	 * @param coinIDs
+	 * Fetches data on all cryptocoins specified in coinDB.coinList and updates the associated
+	 * coin object.
 	 */
-	public static void Fetch(ArrayList<String> coinIDs)
+	public static void Fetch()
 	{
-		for (String id : coinIDs)
+		for (String id : CoinDB.coinList)
 		{
 			Coin coin = coinDB.GetCoin(id);
 			
@@ -88,23 +88,36 @@ public class CoinFetcher {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+			
 		}
+		
+		coinDB.PrintCoins();
 	}
 	
 	/**
 	 * Fetches data on a crypto coin and adds the it as a Coin object to the database
 	 * of coins coinDB
 	 * 
-	 * @param  coinIDs
-	 *         list containing the api IDs for the Coins to fetch information for
+	 * 
 	 */
-	public static void FetchFirstTime(ArrayList<String> coinIDs)
+	public static void FetchFirstTime()
 	{
-		for (String id : coinIDs)
+		for (String id : CoinDB.coinList)
 		{
 			Coin coin = FetchNewCoin(id);
 			coinDB.AddCoin(id, coin);
+			
+			// delay to prevent exceeding api call limits
+			try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 		}
+		
+		coinDB.PrintCoins();
+		
 	}
 	
 	
