@@ -1,10 +1,3 @@
-/**
- * Class for the Trading Strategy 01. Inherits from the TradingStrategy class.
- * 
- * @author Arjav R., Balaaj A.
- * 
- */
-
 package coinSim.tradingStrategy;
 
 import coinSim.session.Trader;
@@ -15,11 +8,29 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.ArrayList;
 
+/**
+ * The {@code TradingStrategy01} class inherits from the {@code TradingStrategy} class.
+ * It represents the trading strategy called "Strategy-01" that deals with the buying
+ * and selling of BTC and ETH crypto coins.
+ * 
+ * @author  Arjav R.
+ * @author  Balaaj A.
+ * 
+ */
 public class TradingStrategy01 extends TradingStrategy {
     
 	private static HashSet<String> coinsOfInterest = new HashSet<String>(Arrays.asList("bitcoin", "ethereum"));
 	public static String StrategyName = "Strategy-01";
 	
+    /**
+     * 
+     * 
+     * @param  trader
+     *         Trader object of the trader performing a trade using this strategy
+     *         
+     * @param  recordTable
+     *         keeps record of all trades performed across traders
+     */
     public boolean Enact(Trader trader, RecordTable recordTable) {
         
     	Coin bitcoin = coinDB.GetCoin("bitcoin");

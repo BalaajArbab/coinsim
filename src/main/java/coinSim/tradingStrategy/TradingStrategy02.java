@@ -1,10 +1,3 @@
-/**
- * Class for the Trading Strategy 02. Inherits from the TradingStrategy class.
- * 
- * @author Arjav R., Balaaj A.
- * 
- */
-
 package coinSim.tradingStrategy;
 
 import coinSim.session.Trader;
@@ -15,6 +8,15 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.ArrayList;
 
+/**
+ * The {@code TradingStrategy02} class inherits from the {@code TradingStrategy} class.
+ * It represents the trading strategy called "Strategy-02" that deals with the buying
+ * and selling of DOGE and ETH crypto coins.
+ * 
+ * @author  Arjav R.
+ * @author  Balaaj A.
+ * 
+ */
 public class TradingStrategy02 extends TradingStrategy {
 
     // set of coins necessary for this trading strategy
@@ -27,7 +29,7 @@ public class TradingStrategy02 extends TradingStrategy {
      *         Trader object of the trader performing a trade using this strategy
      *         
      * @param  recordTable
-     *         keeps record of trades performed        
+     *         keeps record of all trades performed across traders
      */
     public boolean Enact(Trader trader, RecordTable recordTable) {
         
