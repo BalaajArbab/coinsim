@@ -29,6 +29,7 @@ import coinSim.authentication.authentication;
 public class CreateAccountUI implements ActionListener {
 
 	private static JLabel userLabel;
+	private static JLabel titleLabel;
 	private static JTextField userText;
 	private static JLabel passwordLabel;
 	private static JPasswordField passwordText;
@@ -53,29 +54,34 @@ public class CreateAccountUI implements ActionListener {
 
 		// Configuring the panel
 		panel.setLayout(null);
+		
+		// Adding Title Label
+		titleLabel = new JLabel("Create Account Page");
+		titleLabel.setBounds(110, 20, 130, 25);
+		panel.add(titleLabel);
 
 		// Adding labels
 		userLabel = new JLabel("User");
-		userLabel.setBounds(10, 20, 80, 25);
+		userLabel.setBounds(50, 50, 80, 25);
 		panel.add(userLabel);
 
 		// Adding textfield with a default length of 20
 		userText = new JTextField(20);
-		userText.setBounds(100, 20, 165, 25);
+		userText.setBounds(130, 50, 165, 25);
 		panel.add(userText);
 
 		// Adding password label and password textbox
 		passwordLabel = new JLabel("Password");
-		passwordLabel.setBounds(10, 50, 80, 25);
+		passwordLabel.setBounds(50, 90, 80, 25);
 		panel.add(passwordLabel);
 
 		passwordText = new JPasswordField();
-		passwordText.setBounds(100, 50, 165, 25);
+		passwordText.setBounds(130, 90, 165, 25);
 		panel.add(passwordText);
 
 		// Adding Login Button
-		button = new JButton("Create New Account");
-		button.setBounds(10, 80, 200, 25);
+		button = new JButton("Confirm");
+		button.setBounds(80,130, 80, 25);
 
 		// Adding button action
 		button.addActionListener(new CreateAccountUI());
@@ -83,7 +89,7 @@ public class CreateAccountUI implements ActionListener {
 
 		// Adding buttonBack Button
 		buttonBack = new JButton("Back");
-		buttonBack.setBounds(220, 80, 80, 25);
+		buttonBack.setBounds(170, 130, 80, 25);
 		// Adding button action
 		buttonBack.addActionListener(new LoginUI());
 		panel.add(buttonBack);

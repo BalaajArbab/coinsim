@@ -48,7 +48,7 @@ public class LoginUI implements ActionListener {
 		// Configuring the panel
 		panel.setLayout(null);
 		
-		// Adding labels
+		// Adding title label
 		titleLabel = new JLabel("Login Page");
 		titleLabel.setBounds(130, 20, 80, 25);
 		panel.add(titleLabel);
