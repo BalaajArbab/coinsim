@@ -424,8 +424,6 @@ public class OurUI extends JFrame implements ActionListener
 		{
 			String value = (String)dtm.getValueAt(i, 2);
 			
-			System.out.println(value);
-			
 			switch(value)
 			{
 				case "None": 
