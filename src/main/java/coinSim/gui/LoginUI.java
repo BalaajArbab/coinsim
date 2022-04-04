@@ -17,6 +17,7 @@ import coinSim.authentication.authentication;
 public class LoginUI implements ActionListener {
 
 	private static JLabel userLabel;
+	private static JLabel titleLabel;
 	private static JTextField userText;
 	private static JLabel passwordLabel;
 	private static JPasswordField passwordText;
@@ -46,29 +47,34 @@ public class LoginUI implements ActionListener {
 
 		// Configuring the panel
 		panel.setLayout(null);
+		
+		// Adding labels
+		titleLabel = new JLabel("Login Page");
+		titleLabel.setBounds(130, 20, 80, 25);
+		panel.add(titleLabel);
 
 		// Adding labels
 		userLabel = new JLabel("User");
-		userLabel.setBounds(10, 20, 80, 25);
+		userLabel.setBounds(20, 50, 80, 25);
 		panel.add(userLabel);
 
 		// Adding textfield with a default length of 20
 		userText = new JTextField(20);
-		userText.setBounds(100, 20, 165, 25);
+		userText.setBounds(100, 50, 165, 25);
 		panel.add(userText);
 
 		// Adding password label and password textbox
 		passwordLabel = new JLabel("Password");
-		passwordLabel.setBounds(10, 50, 80, 25);
+		passwordLabel.setBounds(20, 90, 80, 25);
 		panel.add(passwordLabel);
 
 		passwordText = new JPasswordField();
-		passwordText.setBounds(100, 50, 165, 25);
+		passwordText.setBounds(100, 90, 165, 25);
 		panel.add(passwordText);
 
 		// Adding Login Button
 		button = new JButton("Login");
-		button.setBounds(10, 80, 80, 25);
+		button.setBounds(80,130, 80, 25);
 
 		// Adding button action
 		button.addActionListener(new LoginUI());
@@ -76,16 +82,18 @@ public class LoginUI implements ActionListener {
 
 		// Adding buttonBack Button
 		buttonBack = new JButton("Back");
-		buttonBack.setBounds(100, 80, 80, 25);
+		buttonBack.setBounds(170, 130, 80, 25);
 		// Adding button action
 		buttonBack.addActionListener(new LoginUI());
 		panel.add(buttonBack);
 	
 		// Adding Success label i.e if login is successful
 		success = new JLabel("");
-		success.setBounds(10, 110, 300, 25);
+		success.setBounds(10, 130, 300, 25);
 		panel.add(success);
 
+		
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
 		button.addActionListener(new ActionListener() {

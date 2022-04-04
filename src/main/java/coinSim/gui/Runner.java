@@ -59,6 +59,7 @@ public class Runner implements ActionListener {
 		button2.addActionListener(new Runner());
 		panel.add(button2);
 
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		//////////////////////////////////////////
 		// LoginUI.main(args);
