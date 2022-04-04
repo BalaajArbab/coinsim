@@ -1,10 +1,3 @@
-/**
- * Class for the Trading Strategy 03. Inherits from the TradingStrategy class.
- * 
- * @author Arjav R., Balaaj A.
- * 
- */
-
 package coinSim.tradingStrategy;
 
 import coinSim.session.Trader;
@@ -15,11 +8,27 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.ArrayList;
 
+/**
+ * The {@code TradingStrategy03} class inherits from the {@code TradingStrategy} class.
+ * It represents the trading strategy called "Strategy-03" that deals with the buying
+ * and selling of SOL and DASH crypto coins.
+ * 
+ * @author  Arjav R.
+ * @author  Balaaj A.
+ * 
+ */
 public class TradingStrategy03 extends TradingStrategy {
 
 	private static HashSet<String> coinsOfInterest = new HashSet<String>(Arrays.asList("solana", "dash"));
 	public static String StrategyName = "Strategy-03";
 	
+    /**
+     * @param  trader
+     *         Trader object of the trader performing a trade using this strategy
+     *         
+     * @param  recordTable
+     *         keeps record of all trades performed across traders
+     */
     public boolean Enact(Trader trader, RecordTable recordTable) {
         
     	Coin solana = coinDB.GetCoin("solana");
