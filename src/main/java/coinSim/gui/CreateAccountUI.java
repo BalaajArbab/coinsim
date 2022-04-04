@@ -99,7 +99,7 @@ public class CreateAccountUI implements ActionListener {
 
 		// Adding Success label i.e if login is successful
 		success = new JLabel("");
-		success.setBounds(10, 110, 300, 25);
+		success.setBounds(130, 150, 300, 25);
 		panel.add(success);
 
 		frame.setLocationRelativeTo(null);
@@ -129,7 +129,6 @@ public class CreateAccountUI implements ActionListener {
 						FileWriter myWriter = new FileWriter("users.txt", true);
 						myWriter.write(creds);
 						myWriter.close();
-						System.out.println("Successfully wrote to the file.");
 						success.setText("Account Created Successful!");
 						frame.dispose();
 						// On successful account creation login is called

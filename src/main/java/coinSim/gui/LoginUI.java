@@ -17,6 +17,7 @@ import coinSim.authentication.authentication;
  * The {@code LoginUI} parent class. Contains instantiation of Login UI.
  * 
  * @author  Anubhav A.
+ * @author	Rishabh J.
  * 
  */
 public class LoginUI implements ActionListener {
@@ -100,7 +101,7 @@ public class LoginUI implements ActionListener {
 	
 		// Adding Success label i.e if login is successful
 		success = new JLabel("");
-		success.setBounds(10, 130, 300, 25);
+		success.setBounds(100, 150, 300, 25);
 		panel.add(success);
 
 		
@@ -116,23 +117,25 @@ public class LoginUI implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
+				// Collects the username and password from the text fields
 				String user = userText.getText();
 				String password = passwordText.getText();
+				// Passes the password to the hashCode function which returns the hashed password
 				int passHash = Encryption.hashCode(password);
+				// creds set to the user credentials formatted correctly
 				String creds = user + "," + passHash;
-				// System.out.println(user +","+password);
 
+				// passes the creds to validCredentials to check if the entered credentials match stored records
 				boolean result = authentication.validCredentials(creds);
 
-				System.out.println(result);
+				// On authorization proceed to OurUI
 				if (result == true) {
-
 					success.setText("Login Successful!");
 					frame.dispose();
-					// And then call OurUI
 					OurUI.main(Args);
 				}
 
+				// Inform user of incorrect details
 				else {
 					success.setText("Incorrect Credentials!");
 				}

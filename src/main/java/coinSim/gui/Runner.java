@@ -88,7 +88,6 @@ public class Runner implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				System.out.println("1 clicked");
 				frame.dispose();
 				LoginUI.main(Args);
 			}
@@ -101,7 +100,6 @@ public class Runner implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				System.out.println("2 clicked");
 				frame.dispose();
 				CreateAccountUI.main(Args);
 			}
