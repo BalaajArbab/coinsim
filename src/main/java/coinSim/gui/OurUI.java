@@ -241,6 +241,7 @@ public class OurUI extends JFrame implements ActionListener
 		JFrame frame = OurUI.getInstance();
 		frame.setSize(900, 600);
 		frame.pack();
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 	
