@@ -22,6 +22,7 @@ import coinSim.authentication.login;
 public class Runner implements ActionListener {
 	private static JLabel userLabel;
 	private static JTextField userText;
+	private static JLabel titleLabel;
 	private static JLabel passwordLabel;
 	private static JPasswordField passwordText;
 	private static JButton button;
@@ -48,6 +49,13 @@ public class Runner implements ActionListener {
 
 		// Configuring the panel
 		panel.setLayout(null);
+		
+		// Adding title label
+		titleLabel = new JLabel("Welcome to CoinSim");
+		titleLabel.setBounds(110, 20, 130, 50);
+		panel.add(titleLabel);
+		
+		
 
 		// Adding Login Button
 		button = new JButton("Login");
