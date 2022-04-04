@@ -30,6 +30,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import org.apache.commons.lang3.time.StopWatch;
+
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
@@ -39,7 +41,6 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.Range;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import coinSim.utils.DataVisualizationCreator;
 
 import coinSim.session.*;
 import coinSim.viewers.*;
@@ -65,8 +66,10 @@ public class OurUI extends JFrame implements ActionListener
 		return instance;
 	}
 	
+	private StopWatch sw;
+	boolean firstTrade = true;
+	
 	private Ledger ledger;
-//	private CoinDB coinDB;
 	private RecordTable recordTable;
 	
 	private DefaultTableModel dtm;
@@ -97,6 +100,8 @@ public class OurUI extends JFrame implements ActionListener
 		this.recordTable = new RecordTable();
 //		this.coinDB = CoinDB.GetInstance();
 		
+		sw = new StopWatch();
+		sw.start();
 		
 		
 		dtm = new DefaultTableModel(new Object[] { "Trader", "Coin List", "Strategy Name" }, 0)
@@ -259,9 +264,21 @@ public class OurUI extends JFrame implements ActionListener
 		String command = e.getActionCommand();
 		if ("performTrade".equals(command)) 
 		{
+			long timePassed = this.sw.getTime() / 1000;
+			
+			int waitTime = 45;
+			
+			
+			if (!this.firstTrade && !(timePassed >= waitTime))
+			{
+				JOptionPane.showMessageDialog(this, "Please wait " + (waitTime - timePassed) + " more seconds before trying to perform a trade operation.");
+				return;
+			}
+			this.firstTrade = false;
 			
 			boolean atleastOneTradePerformed = TradingStratFacade.PerformTrade(ledger, recordTable);
-			
+			sw.reset();
+			sw.start();
 			
 			this.traderViewer.Notify(); // To fix trade strategy selected in view, if confirm button was not pressed.
 			
