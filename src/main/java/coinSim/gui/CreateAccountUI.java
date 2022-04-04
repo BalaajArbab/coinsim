@@ -93,6 +93,7 @@ public class CreateAccountUI implements ActionListener {
 		success.setBounds(10, 110, 300, 25);
 		panel.add(success);
 
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
 		button.addActionListener(new ActionListener() {

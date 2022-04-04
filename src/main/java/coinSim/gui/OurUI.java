@@ -54,7 +54,7 @@ public class OurUI extends JFrame implements ActionListener
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static String[] coinList = new String[] {"bitcoin", "ethereum", "dogecoin", "solana", "dash", "terra-luna", "avalance-2", "aave", "maker"};
+	private String[] coinList = CoinDB.coinList;
 	
 	private static OurUI instance;
 	
@@ -91,13 +91,12 @@ public class OurUI extends JFrame implements ActionListener
 		// Set window title
 		super("CoinSim");
 		
-		CoinFetcher.FetchFirstTime(new ArrayList<String>(Arrays.asList(coinList)));
+		CoinFetcher.FetchFirstTime();
 		
 		this.ledger = new Ledger();
 		this.recordTable = new RecordTable();
 		this.coinDB = CoinDB.GetInstance();
 		
-		coinDB.PrintCoins();
 		
 		
 		dtm = new DefaultTableModel(new Object[] { "Trader", "Coin List", "Strategy Name" }, 0)
@@ -251,51 +250,32 @@ public class OurUI extends JFrame implements ActionListener
 		String command = e.getActionCommand();
 		if ("performTrade".equals(command)) 
 		{
-//			for (int count = 0; count < dtm.getRowCount(); count++)
+////			
+//			
+//			CoinFetcher.Fetch();
+//			
+//			// coinDB.PrintCoins();
+//			
+//			boolean atleastOneTradePerformed = false;
+//			
+//			for (Trader trader : this.ledger.GetTraders())
 //			{
-//					Object traderObject = dtm.getValueAt(count, 0);
-//					if (traderObject == null) {
-//						JOptionPane.showMessageDialog(this, "please fill in Trader name on line " + (count + 1) );
-//						return;
+//				TradingStrategy strat = StrategyCreator.CreateStrategy(trader.GetTradeStrategy());
+//				
+//				
+//				if (strat != null)
+//				{					
+//					boolean tradePerformed = strat.Enact(trader, recordTable);
+//					
+//					if (!tradePerformed)
+//					{
+//						System.out.println("Trade not performed for " + trader.GetName() + " due to mismatch of coins of interest");
 //					}
-//					String traderName = traderObject.toString();
-//					Object coinObject = dtm.getValueAt(count, 1);
-//					if (coinObject == null) {
-//						JOptionPane.showMessageDialog(this, "please fill in cryptocoin list on line " + (count + 1) );
-//						return;
-//					}
-//					String[] coinNames = coinObject.toString().split(",");
-//					Object strategyObject = dtm.getValueAt(count, 2);
-//					if (strategyObject == null) {
-//						JOptionPane.showMessageDialog(this, "please fill in strategy name on line " + (count + 1) );
-//						return;
-//					}
-//					String strategyName = strategyObject.toString();
-//					System.out.println(traderName + " " + Arrays.toString(coinNames) + " " + strategyName);
-//	        }
+//					else atleastOneTradePerformed = true;
+//				}
+//			}
 			
-			CoinFetcher.Fetch(new ArrayList<String>(Arrays.asList(coinList)));
-			
-			coinDB.PrintCoins();
-			
-			boolean atleastOneTradePerformed = false;
-			
-			for (Trader trader : this.ledger.GetTraders())
-			{
-				TradingStrategy strat = StrategyCreator.CreateStrategy(trader.GetTradeStrategy());
-				
-				
-				if (strat != null)
-				{					
-					boolean tradePerformed = strat.Enact(trader, recordTable);
-					
-					if (!tradePerformed)
-					{
-						System.out.println("Trade not performed for " + trader.GetName() + " due to mismatch of coins of interest");
-					}
-					else atleastOneTradePerformed = true;
-				}
-			}
+			boolean atleastOneTradePerformed = TradingStratFacade.PerformTrade(ledger, recordTable);
 			
 			this.traderViewer.Notify(); // To fix trade strategy selected in view, if confirm button was not pressed.
 			
@@ -452,13 +432,6 @@ public class OurUI extends JFrame implements ActionListener
 	private ChartPanel createChartPanel() {
 			
 			this.dataset = new DefaultCategoryDataset();
-	//		Those are hard-coded values!!!! 
-	//		You will have to come up with a proper datastructure to populate the BarChart with live data!
-//			dataset.setValue(6, "Trader-1", "Strategy-A");
-//			dataset.setValue(5, "Trader-2", "Strategy-B");
-//			dataset.setValue(0, "Trader-3", "Strategy-E");
-//			dataset.setValue(1, "Trader-4", "Strategy-C");
-//			dataset.setValue(10, "Trader-5", "Strategy-D");
 	
 			CategoryPlot plot = new CategoryPlot();
 			BarRenderer barrenderer1 = new BarRenderer();
@@ -468,7 +441,7 @@ public class OurUI extends JFrame implements ActionListener
 			CategoryAxis domainAxis = new CategoryAxis("Strategy");
 			plot.setDomainAxis(domainAxis);
 			LogAxis rangeAxis = new LogAxis("Actions(Buys or Sells)");
-			rangeAxis.setRange(new Range(1.0, 20.0));
+			rangeAxis.setRange(new Range(0.1, 20.0));
 			plot.setRangeAxis(rangeAxis);
 			
 	

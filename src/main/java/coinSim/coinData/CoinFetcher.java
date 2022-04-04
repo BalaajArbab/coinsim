@@ -1,8 +1,3 @@
-/**
- * Fetches Coin data from CoinGecko API and constructs/updates Coin objects.
- * @author Balaaj Arbab
- */
-
 package coinSim.coinData;
 
 import coinSim.utils.DataFetcher;
@@ -13,6 +8,12 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 
+/**
+ * Fetches Coin data from CoinGecko API and constructs/updates Coin objects.
+ * 
+ * @author  Balaaj Arbab
+ * @author  Arjav R.
+ */
 public class CoinFetcher {
 	
 	private static DataFetcher fetcher = new DataFetcher();
@@ -68,38 +69,70 @@ public class CoinFetcher {
 		coin.UpdateCoin(price, mktCap, vol);
 	}
 	
-	public static void Fetch(ArrayList<String> coinIDs)
+	/**
+	 * Fetches data on all cryptocoins specified in coinDB.coinList and updates the associated
+	 * coin object.
+	 */
+	public static void Fetch()
 	{
-		for (String id : coinIDs)
+		for (String id : CoinDB.coinList)
 		{
 			Coin coin = coinDB.GetCoin(id);
 			
 			FetchAndUpdateCoin(id, coin);
+			
+			// delay to prevent exceeding api call limits
+			try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+			
 		}
+		
+		coinDB.PrintCoins();
 	}
 	
-	public static void FetchFirstTime(ArrayList<String> coinIDs)
+	/**
+	 * Fetches data on a crypto coin and adds the it as a Coin object to the database
+	 * of coins coinDB
+	 * 
+	 * 
+	 */
+	public static void FetchFirstTime()
 	{
-		for (String id : coinIDs)
+		for (String id : CoinDB.coinList)
 		{
 			Coin coin = FetchNewCoin(id);
 			coinDB.AddCoin(id, coin);
+			
+			// delay to prevent exceeding api call limits
+			try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 		}
+		
+		coinDB.PrintCoins();
+		
 	}
 	
 	
-	public static void main(String[] args)
-	{
-		Coin testCoin = CoinFetcher.FetchNewCoin("bitcoin", "08-09-2020");
-		
-		System.out.println(testCoin);
-		
-		
-		CoinFetcher.FetchAndUpdateCoin("bitcoin", testCoin);
-		
-		System.out.println(testCoin);
-	}
-	
+//	public static void main(String[] args)
+//	{
+//		Coin testCoin = CoinFetcher.FetchNewCoin("bitcoin", "08-09-2020");
+//		
+//		System.out.println(testCoin);
+//		
+//		
+//		CoinFetcher.FetchAndUpdateCoin("bitcoin", testCoin);
+//		
+//		System.out.println(testCoin);
+//	}
+//	
 	
 
 }
