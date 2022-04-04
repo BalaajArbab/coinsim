@@ -34,6 +34,11 @@ public class Runner implements ActionListener {
 	private static JFrame frame;
 	private static String[] Args;
 
+	/**
+	 * Constructs the UI interface for the Runner Page
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		Args = args;
@@ -75,7 +80,10 @@ public class Runner implements ActionListener {
 
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-
+		
+		/**
+		 * Method is called when the login button is clicked which leads to the login page
+		 */
 		button.addActionListener(new ActionListener() {
 
 			@Override
@@ -86,6 +94,9 @@ public class Runner implements ActionListener {
 			}
 		});
 
+		/**
+		 * Method is called when the Create Account button is clicked which leads to the Create Account page
+		 */
 		button2.addActionListener(new ActionListener() {
 
 			@Override

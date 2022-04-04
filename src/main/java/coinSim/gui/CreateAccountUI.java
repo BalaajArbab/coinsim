@@ -39,7 +39,10 @@ public class CreateAccountUI implements ActionListener {
 	private static JFrame frame;
 	private static JPanel panel;
 	private static String[] Args;
-
+/**
+ * Constructs the UI interface for the CreateAccount Page
+ * @param args
+ */
 	public static void main(String[] args) {
 		Args = args;
 		// creating frame
@@ -102,6 +105,9 @@ public class CreateAccountUI implements ActionListener {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
+		/**
+		 * Method is called when the confirm button is clicked which leads to the login page once account creation is confirmed
+		 */
 		button.addActionListener(new ActionListener() {
 
 			@Override
@@ -116,6 +122,7 @@ public class CreateAccountUI implements ActionListener {
 
 				// passes the creds to validCredentials to check if the user already exists
 				boolean invalid = AccountCreateAuth.validCredentials(user);
+				
 				// If it is not invalid (user does not exist) writes the credentials to the file
 				if (!invalid) {
 					try {
@@ -137,7 +144,10 @@ public class CreateAccountUI implements ActionListener {
 				}
 			}
 		});
-
+		
+		/**
+		 * Method is called when the back button is clicked which leads to the Runner page
+		 */
 		buttonBack.addActionListener(new ActionListener() {
 
 			@Override

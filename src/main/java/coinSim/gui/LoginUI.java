@@ -13,7 +13,12 @@ import javax.swing.JTextField;
 
 import coinSim.authentication.Encryption;
 import coinSim.authentication.authentication;
-
+/**
+ * The {@code LoginUI} parent class. Contains instantiation of Login UI.
+ * 
+ * @author  Anubhav A.
+ * 
+ */
 public class LoginUI implements ActionListener {
 
 	private static JLabel userLabel;
@@ -30,6 +35,12 @@ public class LoginUI implements ActionListener {
 	private static JFrame frame;
 	private static String[] Args;
 	
+	
+	/**
+	 * Constructs the UI interface for the Login Page
+	 * 
+	 * @param args
+	 */
 
 	public static void main(String[] args) {
 
@@ -96,6 +107,11 @@ public class LoginUI implements ActionListener {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
+		
+		
+		/**
+		 * Method is called when the login button is clicked which leads to the ourUI page
+		 */
 		button.addActionListener(new ActionListener() {
 
 			@Override
@@ -123,12 +139,15 @@ public class LoginUI implements ActionListener {
 			}
 		});
 
+		/**
+		 * Method is called when the back button is clicked which leads to the Runner page
+		 */
 		buttonBack.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				frame.dispose();
-				// And then call OurUI
+				// And then call Runner
 				Runner.main(Args);
 			}
 		});
