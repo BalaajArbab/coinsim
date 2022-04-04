@@ -3,17 +3,32 @@ package coinSim.viewers;
 import javax.swing.table.DefaultTableModel;
 import coinSim.session.*;
 
+/**
+ * The viewer object for the view of traders with Ledger and DefaultTableModel as its model.
+ * 
+ * @author Balaaj A.
+ *
+ */
 public class TraderViewer extends Viewer {
 	
 	private DefaultTableModel dtm;
 	private Ledger ledger;
 	
+	/**
+	 * 
+	 * @param dtm 
+	 * @param ledger
+	 */
 	public TraderViewer(DefaultTableModel dtm, Ledger ledger)
 	{
 		this.dtm = dtm;
 		this.ledger = ledger;
 	}
 	
+	/**
+	 * Updates the view of traders based on the current state of ledger and dtm.
+	 * 
+	 */
 	public void Notify()
 	{
 		dtm.setRowCount(0);

@@ -124,6 +124,10 @@ public class CoinFetcher {
 		
 	}
 	
+	/**
+	 * Instantiates the DB of Coins with the IDs of Coins under consideration.
+	 * 
+     */
 	public static void InstantiateCoinObjects()
 	{
 		for (String id : CoinDB.coinList)

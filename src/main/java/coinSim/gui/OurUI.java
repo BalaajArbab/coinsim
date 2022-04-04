@@ -48,17 +48,24 @@ import coinSim.coinData.*;
 import coinSim.tradingStrategy.*;
 import coinSim.records.*;
 
+/**
+ * Implements the main UI of the trading software.
+ * 
+ * @author Balaaj A.
+ *
+ */
 public class OurUI extends JFrame implements ActionListener
 {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	
 	private String[] coinList = CoinDB.coinList;
 	
 	private static OurUI instance;
 	
+	/*
+	 * Implements the Singleton design pattern to ensure only one main UI view exists.
+	 */
 	public static OurUI getInstance() {
 		if (instance == null)
 			instance = new OurUI();
@@ -248,7 +255,10 @@ public class OurUI extends JFrame implements ActionListener
 	}
 	
 	
-
+	/**
+	 * Runs the UI element.
+	 * @param args
+	 */
 	public static void main(String[] args) 
 	{
 		
@@ -260,6 +270,9 @@ public class OurUI extends JFrame implements ActionListener
 	}
 	
 	
+	/**
+	 * Event listener for button clicks.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
