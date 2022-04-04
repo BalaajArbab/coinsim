@@ -54,7 +54,7 @@ public class OurUI extends JFrame implements ActionListener
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static String[] coinList = new String[] {"bitcoin", "ethereum", "dogecoin"};
+	private static String[] coinList = new String[] {"bitcoin", "ethereum", "dogecoin", "solana", "dash", "terra-luna", "avalance-2", "aave", "maker"};
 	
 	private static OurUI instance;
 	
