@@ -91,13 +91,12 @@ public class OurUI extends JFrame implements ActionListener
 		// Set window title
 		super("CoinSim");
 		
-		CoinFetcher.FetchFirstTime(new ArrayList<String>(Arrays.asList(coinList)));
+		CoinFetcher.FetchFirstTime();
 		
 		this.ledger = new Ledger();
 		this.recordTable = new RecordTable();
 		this.coinDB = CoinDB.GetInstance();
 		
-		coinDB.PrintCoins();
 		
 		
 		dtm = new DefaultTableModel(new Object[] { "Trader", "Coin List", "Strategy Name" }, 0)
@@ -251,30 +250,32 @@ public class OurUI extends JFrame implements ActionListener
 		String command = e.getActionCommand();
 		if ("performTrade".equals(command)) 
 		{
+////			
 //			
+//			CoinFetcher.Fetch();
+//			
+//			// coinDB.PrintCoins();
+//			
+//			boolean atleastOneTradePerformed = false;
+//			
+//			for (Trader trader : this.ledger.GetTraders())
+//			{
+//				TradingStrategy strat = StrategyCreator.CreateStrategy(trader.GetTradeStrategy());
+//				
+//				
+//				if (strat != null)
+//				{					
+//					boolean tradePerformed = strat.Enact(trader, recordTable);
+//					
+//					if (!tradePerformed)
+//					{
+//						System.out.println("Trade not performed for " + trader.GetName() + " due to mismatch of coins of interest");
+//					}
+//					else atleastOneTradePerformed = true;
+//				}
+//			}
 			
-			CoinFetcher.Fetch(new ArrayList<String>(Arrays.asList(this.coinList)));
-			
-			// coinDB.PrintCoins();
-			
-			boolean atleastOneTradePerformed = false;
-			
-			for (Trader trader : this.ledger.GetTraders())
-			{
-				TradingStrategy strat = StrategyCreator.CreateStrategy(trader.GetTradeStrategy());
-				
-				
-				if (strat != null)
-				{					
-					boolean tradePerformed = strat.Enact(trader, recordTable);
-					
-					if (!tradePerformed)
-					{
-						System.out.println("Trade not performed for " + trader.GetName() + " due to mismatch of coins of interest");
-					}
-					else atleastOneTradePerformed = true;
-				}
-			}
+			boolean atleastOneTradePerformed = TradingStratFacade.PerformTrade(ledger, recordTable);
 			
 			this.traderViewer.Notify(); // To fix trade strategy selected in view, if confirm button was not pressed.
 			

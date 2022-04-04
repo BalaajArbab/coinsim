@@ -9,4 +9,8 @@ Rishabh,1403730359
 RandomTest,1510375
 Again,1509442
 Aery,3314090
+<<<<<<< HEAD
 rish,3556498
+=======
+Rishabh2,3556498
+>>>>>>> 0c44250a2a83f481efcac138ea284cee49e9489b
