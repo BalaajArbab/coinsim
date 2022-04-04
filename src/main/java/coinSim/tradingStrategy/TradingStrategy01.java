@@ -24,12 +24,6 @@ public class TradingStrategy01 extends TradingStrategy {
 	
     /**
      * 
-     * 
-     * @param  trader
-     *         Trader object of the trader performing a trade using this strategy
-     *         
-     * @param  recordTable
-     *         keeps record of all trades performed across traders
      */
     public boolean Enact(Trader trader, RecordTable recordTable) {
         
