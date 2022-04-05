@@ -371,7 +371,7 @@ public class OurUI extends JFrame implements ActionListener
 	
 	private void addCoin()
 	{
-		String coins = JOptionPane.showInputDialog("Id/Symbol of coin to associate with Trader? (or list of coins separated by space)");
+		String coins = JOptionPane.showInputDialog("Id of coin to associate with Trader? (or list of coins separated by space)");
 		
 		int selectedRow = table.getSelectedRow();
 		if (selectedRow != -1)
@@ -393,7 +393,7 @@ public class OurUI extends JFrame implements ActionListener
 	
 	private void removeCoin()
 	{
-		String coinName = JOptionPane.showInputDialog("Id/Symbol of coin to remove from Trader?");
+		String coinName = JOptionPane.showInputDialog("Id of coin to remove from Trader?");
 		
 		int selectedRow = table.getSelectedRow();
 		if (selectedRow != -1)
