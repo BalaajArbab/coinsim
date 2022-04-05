@@ -43,5 +43,5 @@ For a pre-configured traders list you may click on the "Populate Ledger With Tra
 After making changes to the trading strategies for traders you must click on the "Confirm Strategy Selection" button. This will lock in the selected trading strategies for all traders.
 
   
-Once the desired traders, coins, and strategies have been entered, you can use the "Perform Trade" button to action a trade.
+Once the desired traders, coins, and strategies have been entered, you can use the "Perform Trade" button to action a trade. The perform trade operations takes a few seconds to compute, as its speed is limited by CoinGecko rate limits.
 Due to CoinGecko API limitations, a trade can only be performed every 30 seconds.
